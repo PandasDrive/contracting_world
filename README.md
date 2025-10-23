@@ -1,120 +1,88 @@
 Project: The Contracting Ecosystem Explorer
-A visual, interactive guide to understanding the complex world of cleared government contracting. This project's goal is to be a fun, informative tool that explains the "three-level" contracting model and why the market is so volatile and defined by "job hopping."
+Status: Planning / Pre-development
 
-Core Concept: The "Three-Level Model of Volatility"
-The central problem this site solves is explaining why contractor jobs seem temporary. The answer is that a contractor's employment is often tied to a specific, funded Task Order (Level 2), not just the company they work for (Level 3).
+1. Core Concept: The "Three-Level Model of Volatility"
+This project is a visual, interactive guide to understanding the complex world of cleared government contracting. Its goal is to be a fun, informative tool that explains the "three-level" contracting model (Customer, Prime, Sub) and why the market is so volatile and defined by "job hopping."
 
-When this Task Order is "re-competed" (put up for bid again) every 3-5 years, the company that loses the bid loses the funding for those jobs. The company that wins the bid now has the exact same jobs to fill.
+The central theme is that a contractor's employment is tied to a specific Task Order (Level 2), not just the company they work for (Level 3). When that Task Order is "re-competed," the winning and losing companies cause a wave of Contingent Offers, forcing employees to "hop" to a new company to keep the same job.
 
-This forces the "job hop"—the employee is given a contingent offer by the new winning company to do the same job at the same desk, just with a new logo on their badge. This website will visualize this 3-level ecosystem.
+2. Project Structure (File Layout)
+This is the file and folder structure we will build.
 
-Visual Layout & User Experience (index.html)
-The main page will feature the 3D Image Ring visual. It will be composed of three distinct, concentric rings, each representing a "Level" in the ecosystem. The rings will rotate independently at different speeds.
+contracting-explorer/
+│
+├── README.md               (You are here!)
+├── index.html              (Main page with the 3D rings)
+├── contingent_offers.html  (The "explainer" page)
+│
+├── css/
+│   └── style.css           (All styles for the rings, tooltips, etc.)
+│
+├── js/
+│   ├── data.js             (Our list of companies, logos, and links)
+│   └── app.js              (The code to build the rings and run the simulation)
+│
+└── img/                    (Folder for all the company logos)
+    ├── nsa.png
+    ├── leidos.png
+    ├── visionist.png
+    ├── lockheed_martin.png
+    ├── hawkeye_360.png
+    └── (etc...)
+3. Development Roadmap
+We'll build this in three phases to make it manageable.
 
-Ring 1: The Government (The Customer)
-Layer: The innermost ring.
+Phase 1: The Minimum Viable Product (MVP) - The Visual
+Goal: Get the 3D rings spinning with static, hard-coded content.
 
-Content: Logos of the main Intelligence Community (IC) and Department of Defense (DoD) agencies.
+HTML: Create the index.html file with the basic structure (<header>, <body>, <div> for each of the three rings).
 
-Companies/Logos:
+HTML: Create the contingent_offers.html page with its text content and a "Back" button.
 
-National Security Agency (NSA)
+CSS: Focus entirely on the style.css file. Using the tutorial you found, get one ring spinning with 5-6 manually added images from the img/ folder.
 
-National Geospatial-Intelligence Agency (NGA)
+CSS: Once one ring works, copy and adapt the CSS for Ring 2 and Ring 3.
 
-National Reconnaissance Office (NRO)
+CSS: Add the "on-hover" tooltip CSS effect for the images.
 
-Defense Intelligence Agency (DIA)
+LINK: Connect the index.html and contingent_offers.html pages with a simple link.
 
-Central Intelligence Agency (CIA)
+At the end of Phase 1, we will have a beautiful, spinning 3D site, but it won't be "smart."
 
-Ring 2: The "Umbrellas" (The Primes)
-Layer: The middle ring.
+Phase 2: Dynamic Data
+Goal: Load all our companies from our data.js file instead of hard-coding them in the HTML.
 
-Content: Logos of the massive "Prime Contractors" that win the billion-dollar IDIQ ("Umbrella") contracts.
+DATA: Create js/data.js. Copy and paste our complete company list (from our conversation) into this file as a JavaScript variable (e.g., const companyData = [...]).
 
-Companies/Logos:
+JS: Create js/app.js.
 
-Lockheed Martin
+JS: Write a "main" function in app.js that runs when the page loads. This function will:
 
-Northrop Grumman
+Read the companyData from data.js.
 
-Leidos
+Loop through each ring's data.
 
-Booz Allen Hamilton
+For each company, dynamically create the HTML elements (<div>, <img>, <p>).
 
-General Dynamics (GDIT)
+Append these new elements into the correct ring <div> in index.html.
 
-RTX (Raytheon)
+At the end of Phase 2, the website will be complete. All 20+ companies will be spinning in their correct rings, all with their proper links and descriptions.
 
-BAE Systems
+Phase 3: The "Re-Compete" Simulation
+Goal: Make the site interactive by adding the simulation.
 
-CACI
+HTML: Add the "Simulate a Contract Re-Compete" button to index.html.
 
-SAIC
+JS: In app.js, write a new function that runs when the "Simulate" button is clicked.
 
-Ring 3: The "Specialists" (The Subs)
-Layer: The outermost ring.
+JS/CSS: This function will:
 
-Content: Logos of the mid-tier and specialist companies (like Visionist) that are highly sought after for their specific talent. They often act as subcontractors.
+Stop the CSS spinning animation (element.style.animationPlayState = 'paused').
 
-Companies/Logos:
+Add a "highlight" class to the simulated logos (e.g., [NRO], [Zeta], [Visionist]).
 
-Visionist
+Show a pop-up text box with the "Phase 1: Zeta wins!" text.
 
-Zeta Associates (a Lockheed Martin Co.)
+After a 3-second pause, change the highlights and text to "Phase 2: Northrop Grumman wins!"
 
-Praxis Engineering (a GDIT Co.)
-
-Enlighten (an HII Co.)
-
-KeyW (a Jacobs Co.)
-
-Parsons
-
-ManTech
-
-Peraton
-
-Two Six Technologies
-
-Key Features & Interactions
-Dynamic Tooltip (On Hover):
-
-Action: User hovers over any logo in any ring.
-
-Result: A "tooltip" box appears with a brief, 1-2 sentence description.
-
-Example (hovering Visionist): "A specialist company focused on data science, SIGINT analysis, and engineering for the IC. Often works as a high-value subcontractor."
-
-Example (hovering Leidos): "A major Prime contractor that manages massive, long-term IDIQ contracts for the DoD and IC."
-
-External Link (On Click):
-
-Action: User clicks on any logo.
-
-Result: The company's career page opens in a new tab.
-
-Educational Pop-up: "The Re-Compete Simulation" (Button Click):
-
-The user can click a button on the page labeled "Simulate a Contract Re-Compete."
-
-Action: The rings stop spinning and "lock" onto a specific, real-world scenario.
-
-Example Scenario:
-
-Highlight: The [NRO] logo (Ring 1), [Zeta/Lockheed] logo (Ring 2), and [Visionist] logo (Ring 3) all light up.
-
-Text Box Appears (Phase 1): "The NRO awards the 'MIDAS STUDIES' Task Order to Zeta (Prime), who puts Visionist (Sub) on their team."
-
-...a 3-second pause...
-
-Text Box Appears (Phase 2): "5 YEARS LATER: THE CONTRACT IS UP FOR RE-COMPETE!"
-
-Highlight: The [NRO], [Zeta/Lockheed], and [Visionist] logos fade. The [Northrop Grumman] logo (Ring 2) and [Praxis] logo (Ring 3) light up.
-
-Text Box Appears (Phase 3): "Northrop Grumman wins the re-compete! They beat Zeta. The 'MIDAS STUDIES' contract (and all its jobs) now belongs to them."
-
-Text Box Appears (Phase 4): "A Visionist employee on 'MIDAS' now has a choice. They will almost certainly get a [Contingent Offer] from Northrop Grumman or its new partner (Praxis) to stay on the project. This is the 'job hop'!"
-
-The [Contingent Offer] text will be a hyperlink that leads to the separate HTML page.
+Show the final text: "The Visionist employee will now get a [Contingent Offer]..."
