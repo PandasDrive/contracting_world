@@ -38,7 +38,7 @@ const companyData = {
             { name: "HawkEye 360", logo: "img/hawkeye_360.png", link: "https://www.he360.com/careers/", desc: "Commercial provider of space-based RF signal data and analytics." },
             { name: "Maxar", logo: "img/maxar.png", link: "https://www.maxar.com/careers", desc: "Commercial provider of high-resolution satellite imagery." },
             { name: "Capella Space", logo: "img/capella_space.png", link: "https://www.capellaspace.com/careers/", desc: "Commercial provider of high-resolution SAR (radar) imagery." },
-            { name:Re: "Umbra", logo: "img/umbra.png", link: "https://umbra.space/careers", desc: "Commercial provider of high-resolution SAR (radar) imagery." },
+            { name: "Umbra", logo: "img/umbra.png", link: "https://umbra.space/careers", desc: "Commercial provider of high-resolution SAR (radar) imagery." },
             { name: "BlackSky", logo: "img/blacksky.png", link: "https://www.blacksky.com/careers/", desc: "Commercial provider of real-time satellite imagery and AI analytics." }
         ]
     }
