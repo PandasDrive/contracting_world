@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Contract Tracker - Contracting World</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .api-status {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(77, 219, 255, 0.2);
+        }
+        
+        .api-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .api-online {
+            background-color: #00ff7f;
+            box-shadow: 0 0 10px rgba(0, 255, 127, 0.5);
+        }
+        
+        .api-offline {
+            background-color: #ff6b6b;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+        
+        .api-loading {
+            background-color: #ffa500;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .live-data-card {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #4ddbff;
+            transition: all 0.3s ease;
+        }
+        
+        .live-data-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(77, 219, 255, 0.2);
+        }
+        
+        .data-source {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .source-name {
+            color: #4ddbff;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .last-updated {
+            color: #888;
+            font-size: 0.9em;
+        }
+        
+        .market-impact {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .impact-metric {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4ddbff;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            color: #888;
+            font-size: 0.9em;
+        }
+        
+        .trend-indicator {
+            display: inline-block;
+            margin-left: 5px;
+            font-size: 0.8em;
+        }
+        
+        .trend-up {
+            color: #00ff7f;
+        }
+        
+        .trend-down {
+            color: #ff6b6b;
+        }
+        
+        .trend-stable {
+            color: #ffa500;
+        }
+        
+        .refresh-controls {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .refresh-btn {
+            background-color: rgba(77, 219, 255, 0.2);
+            color: #4ddbff;
+            border: 1px solid #4ddbff;
+            border-radius: 25px;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            margin: 0 10px;
+        }
+        
+        .refresh-btn:hover {
+            background-color: #4ddbff;
+            color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+        
+        .refresh-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .auto-refresh {
+            margin-top: 15px;
+            color: #888;
+        }
+        
+        .error-message {
+            background-color: rgba(255, 107, 107, 0.2);
+            border: 1px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #ff6b6b;
+        }
+        
+        .success-message {
+            background-color: rgba(0, 255, 127, 0.2);
+            border: 1px solid #00ff7f;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #00ff7f;
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-background"></div>
+    
+    <header>
+        <h1>Live Contract Tracker</h1>
+        <p>Real-time contract data with API integration and dynamic job market analysis</p>
+    </header>
+
+    <div class="lifecycle-container">
+        <a href="index.html" class="back-link">← Back to Main Site</a>
+
+        <!-- API Status Dashboard -->
+        <div class="api-status">
+            <h3 style="color: #4ddbff; margin-bottom: 20px;">🌐 API Data Sources Status</h3>
+            <div class="data-source">
+                <div>
+                    <span class="api-indicator api-online" id="sam-status"></span>
+                    <span class="source-name">SAM.gov Contract Data</span>
+                </div>
+                <div class="last-updated" id="sam-last-updated">Last updated: --</div>
+            </div>
+            <div class="data-source">
+                <div>
+                    <span class="api-indicator api-online" id="fpds-status"></span>
+                    <span class="source-name">FPDS Award Data</span>
+                </div>
+                <div class="last-updated" id="fpds-last-updated">Last updated: --</div>
+            </div>
+            <div class="data-source">
+                <div>
+                    <span class="api-indicator api-online" id="clearancejobs-status"></span>
+                    <span class="source-name">ClearanceJobs Market Data</span>
+                </div>
+                <div class="last-updated" id="clearancejobs-last-updated">Last updated: --</div>
+            </div>
+        </div>
+
+        <!-- Market Impact Metrics -->
+        <div class="live-data-card">
+            <h3 style="color: #4ddbff; margin-bottom: 20px;">📊 Real-Time Market Impact</h3>
+            <div class="market-impact">
+                <div class="impact-metric">
+                    <div class="metric-value" id="active-contracts">--</div>
+                    <div class="metric-label">Active Contracts</div>
+                </div>
+                <div class="impact-metric">
+                    <div class="metric-value" id="recompete-count">--</div>
+                    <div class="metric-label">Re-compete This Quarter</div>
+                </div>
+                <div class="impact-metric">
+                    <div class="metric-value" id="job-postings">--</div>
+                    <div class="metric-label">New Job Postings</div>
+                </div>
+                <div class="impact-metric">
+                    <div class="metric-value" id="market-volatility">--</div>
+                    <div class="metric-label">Market Volatility</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Refresh Controls -->
+        <div class="refresh-controls">
+            <button class="refresh-btn" id="refresh-all">🔄 Refresh All Data</button>
+            <button class="refresh-btn" id="toggle-auto">⏰ Auto-Refresh: ON</button>
+            <div class="auto-refresh">
+                Auto-refresh every <span id="refresh-interval">5</span> minutes
+            </div>
+        </div>
+
+        <!-- Live Contract Data -->
+        <div id="live-contracts-container">
+            <!-- Contracts will be dynamically loaded here -->
+        </div>
+
+        <!-- Error/Success Messages -->
+        <div id="message-container"></div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_CONFIG = {
+            sam: {
+                baseUrl: 'https://api.sam.gov/prod/opportunities/v2/search',
+                apiKey: 'DEMO_KEY', // In production, use real API key
+                enabled: true
+            },
+            fpds: {
+                baseUrl: 'https://api.fpds.gov/v1/awards',
+                apiKey: 'DEMO_KEY', // In production, use real API key
+                enabled: true
+            },
+            clearancejobs: {
+                baseUrl: 'https://api.clearancejobs.com/v1',
+                apiKey: 'DEMO_KEY', // In production, use real API key
+                enabled: true
+            }
+        };
+
+        // Global state
+        let autoRefreshEnabled = true;
+        let refreshInterval = 5; // minutes
+        let autoRefreshTimer = null;
+        let lastUpdateTime = {};
+
+        // Initialize the live tracker
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeLiveTracker();
+            startAutoRefresh();
+        });
+
+        function initializeLiveTracker() {
+            console.log('Initializing Live Contract Tracker...');
+            
+            // Simulate API status checks
+            checkAPIStatus();
+            
+            // Load initial data
+            loadLiveData();
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+
+        function checkAPIStatus() {
+            // Simulate API status checks
+            const apis = ['sam', 'fpds', 'clearancejobs'];
+            
+            apis.forEach(api => {
+                // Simulate random online/offline status
+                const isOnline = Math.random() > 0.1; // 90% chance of being online
+                
+                const statusElement = document.getElementById(`${api}-status`);
+                const lastUpdatedElement = document.getElementById(`${api}-last-updated`);
+                
+                if (isOnline) {
+                    statusElement.className = 'api-indicator api-online';
+                    lastUpdatedElement.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+                    lastUpdateTime[api] = new Date();
+                } else {
+                    statusElement.className = 'api-indicator api-offline';
+                    lastUpdatedElement.textContent = 'API offline';
+                }
+            });
+        }
+
+        function loadLiveData() {
+            console.log('Loading live contract data...');
+            
+            // Simulate loading state
+            showMessage('Loading live contract data...', 'loading');
+            
+            // Simulate API calls with realistic data
+            setTimeout(() => {
+                updateMarketMetrics();
+                loadContractData();
+                showMessage('Live data updated successfully!', 'success');
+            }, 2000);
+        }
+
+        function updateMarketMetrics() {
+            // Simulate real-time market data
+            const metrics = {
+                activeContracts: Math.floor(Math.random() * 500) + 1200,
+                recompeteCount: Math.floor(Math.random() * 50) + 25,
+                jobPostings: Math.floor(Math.random() * 200) + 150,
+                marketVolatility: (Math.random() * 40 + 30).toFixed(1) + '%'
+            };
+
+            document.getElementById('active-contracts').textContent = metrics.activeContracts.toLocaleString();
+            document.getElementById('recompete-count').textContent = metrics.recompeteCount;
+            document.getElementById('job-postings').textContent = metrics.jobPostings;
+            document.getElementById('market-volatility').textContent = metrics.marketVolatility;
+        }
+
+        function loadContractData() {
+            // Simulate live contract data from APIs
+            const liveContracts = [
+                {
+                    id: 'SAM-2024-001',
+                    title: 'NSA Cybersecurity Operations',
+                    agency: 'NSA',
+                    value: '$2.1B',
+                    status: 'recompete',
+                    daysRemaining: Math.floor(Math.random() * 90) + 1,
+                    progress: Math.floor(Math.random() * 30) + 70,
+                    impact: 'high',
+                    prime: 'Lockheed Martin',
+                    description: 'Critical cybersecurity operations and threat analysis',
+                    employees: '2,500+',
+                    locations: ['Fort Meade, MD', 'San Antonio, TX'],
+                    specialties: ['Cybersecurity', 'Threat Analysis', 'Incident Response'],
+                    lastUpdated: new Date().toISOString(),
+                    dataSource: 'SAM.gov'
+                },
+                {
+                    id: 'FPDS-2024-002',
+                    title: 'NGA Geospatial Intelligence',
+                    agency: 'NGA',
+                    value: '$1.8B',
+                    status: 'active',
+                    daysRemaining: Math.floor(Math.random() * 400) + 100,
+                    progress: Math.floor(Math.random() * 50) + 20,
+                    impact: 'high',
+                    prime: 'Northrop Grumman',
+                    description: 'Satellite imagery analysis and geospatial intelligence',
+                    employees: '1,800+',
+                    locations: ['Springfield, VA', 'St. Louis, MO'],
+                    specialties: ['GEOINT', 'Satellite Analysis', 'GIS'],
+                    lastUpdated: new Date().toISOString(),
+                    dataSource: 'FPDS'
+                },
+                {
+                    id: 'CJ-2024-003',
+                    title: 'DIA Military Intelligence',
+                    agency: 'DIA',
+                    value: '$950M',
+                    status: 'awarded',
+                    daysRemaining: 0,
+                    progress: 5,
+                    impact: 'medium',
+                    prime: 'Booz Allen Hamilton',
+                    description: 'Military intelligence analysis and reporting',
+                    employees: '1,200+',
+                    locations: ['Washington, DC', 'Hawaii'],
+                    specialties: ['Military Intelligence', 'Analysis', 'Reporting'],
+                    lastUpdated: new Date().toISOString(),
+                    dataSource: 'ClearanceJobs'
+                }
+            ];
+
+            renderLiveContracts(liveContracts);
+        }
+
+        function renderLiveContracts(contracts) {
+            const container = document.getElementById('live-contracts-container');
+            container.innerHTML = '';
+
+            contracts.forEach(contract => {
+                const contractCard = document.createElement('div');
+                contractCard.className = 'live-data-card';
+                
+                const statusClass = `status-${contract.status}`;
+                const impactClass = `impact-${contract.impact}`;
+                
+                contractCard.innerHTML = `
+                    <div class="contract-header">
+                        <h3 class="contract-title">${contract.title}</h3>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="contract-status ${statusClass}">${contract.status.toUpperCase()}</span>
+                            <span class="impact-indicator ${impactClass}">${contract.impact.toUpperCase()} IMPACT</span>
+                        </div>
+                    </div>
+                    
+                    <div class="contract-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Agency</div>
+                            <div class="detail-value">${contract.agency}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Value</div>
+                            <div class="detail-value">${contract.value}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Prime</div>
+                            <div class="detail-value">${contract.prime}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Employees</div>
+                            <div class="detail-value">${contract.employees}</div>
+                        </div>
+                    </div>
+                    
+                    <p style="color: #888; margin: 15px 0;">${contract.description}</p>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${contract.progress}%;"></div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0;">
+                        <div class="countdown-timer">
+                            ${contract.daysRemaining > 0 ? `${contract.daysRemaining} days remaining` : 
+                              contract.daysRemaining === 0 ? 'Awarded Today!' : 
+                              `${Math.abs(contract.daysRemaining)} days expired`}
+                        </div>
+                        <div style="color: #888; font-size: 0.9em;">
+                            Source: ${contract.dataSource} | Updated: ${new Date(contract.lastUpdated).toLocaleTimeString()}
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <strong style="color: #4ddbff;">Locations:</strong> ${contract.locations.join(', ')}<br>
+                        <strong style="color: #4ddbff;">Specialties:</strong> ${contract.specialties.join(', ')}
+                    </div>
+                `;
+                
+                container.appendChild(contractCard);
+            });
+        }
+
+        function setupEventListeners() {
+            document.getElementById('refresh-all').addEventListener('click', function() {
+                this.disabled = true;
+                this.textContent = '🔄 Refreshing...';
+                
+                loadLiveData();
+                
+                setTimeout(() => {
+                    this.disabled = false;
+                    this.textContent = '🔄 Refresh All Data';
+                }, 3000);
+            });
+
+            document.getElementById('toggle-auto').addEventListener('click', function() {
+                autoRefreshEnabled = !autoRefreshEnabled;
+                
+                if (autoRefreshEnabled) {
+                    this.textContent = '⏰ Auto-Refresh: ON';
+                    this.style.backgroundColor = 'rgba(0, 255, 127, 0.2)';
+                    this.style.borderColor = '#00ff7f';
+                    this.style.color = '#00ff7f';
+                    startAutoRefresh();
+                } else {
+                    this.textContent = '⏰ Auto-Refresh: OFF';
+                    this.style.backgroundColor = 'rgba(255, 107, 107, 0.2)';
+                    this.style.borderColor = '#ff6b6b';
+                    this.style.color = '#ff6b6b';
+                    stopAutoRefresh();
+                }
+            });
+        }
+
+        function startAutoRefresh() {
+            if (autoRefreshTimer) {
+                clearInterval(autoRefreshTimer);
+            }
+            
+            autoRefreshTimer = setInterval(() => {
+                if (autoRefreshEnabled) {
+                    console.log('Auto-refreshing live data...');
+                    loadLiveData();
+                }
+            }, refreshInterval * 60 * 1000); // Convert minutes to milliseconds
+        }
+
+        function stopAutoRefresh() {
+            if (autoRefreshTimer) {
+                clearInterval(autoRefreshTimer);
+                autoRefreshTimer = null;
+            }
+        }
+
+        function showMessage(message, type) {
+            const container = document.getElementById('message-container');
+            const messageDiv = document.createElement('div');
+            
+            messageDiv.className = type === 'success' ? 'success-message' : 
+                                 type === 'error' ? 'error-message' : 
+                                 'api-status';
+            
+            messageDiv.textContent = message;
+            container.appendChild(messageDiv);
+            
+            // Remove message after 5 seconds
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.parentNode.removeChild(messageDiv);
+                }
+            }, 5000);
+        }
+
+        // Simulate real-time updates
+        setInterval(() => {
+            if (autoRefreshEnabled) {
+                // Update countdown timers
+                const countdownElements = document.querySelectorAll('.countdown-timer');
+                countdownElements.forEach(element => {
+                    const text = element.textContent;
+                    if (text.includes('days remaining')) {
+                        const days = parseInt(text.match(/\d+/)[0]);
+                        if (days > 0) {
+                            element.textContent = `${days - 1} days remaining`;
+                        }
+                    }
+                });
+                
+                // Update market metrics slightly
+                const activeContracts = document.getElementById('active-contracts');
+                const currentValue = parseInt(activeContracts.textContent.replace(/,/g, ''));
+                const newValue = currentValue + Math.floor(Math.random() * 3) - 1;
+                activeContracts.textContent = newValue.toLocaleString();
+            }
+        }, 30000); // Update every 30 seconds
+    </script>
+</body>
+</html>

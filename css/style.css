@@ -394,7 +394,7 @@ main {
 
         .guide-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted for 8 cards */
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); /* Adjusted for 9 cards */
             gap: 20px;
             margin-top: 20px;
         }
