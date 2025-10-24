@@ -22,7 +22,12 @@ const companyData = {
             { name: "Booz Allen Hamilton", logo: "img/booz_allen.png", link: "https://careers.boozallen.com/", desc: "A major Prime focused on consulting, cyber, data science, and analytics." },
             { name: "RTX (Raytheon)", logo: "img/rtx.png", link: "https://careers.rtx.com/", desc: "A 'Big 5' Prime. Specializes in advanced sensors, missiles, and cyber." },
             { name: "CACI", logo: "img/caci.png", link: "https://careers.caci.com/", desc: "A major Prime providing expertise in IT, signals intelligence, and electronic warfare." },
-            { name: "SAIC", logo: "img/saic.png", link: "https://www.saic.com/careers", desc: "A major Prime focused on IT modernization, logistics, and systems engineering." }
+            { name: "SAIC", logo: "img/saic.png", link: "https://www.saic.com/careers", desc: "A major Prime focused on IT modernization, logistics, and systems engineering." },
+            { name: "BAE Systems", logo: "img/bae_systems.png", link: "https://jobs.baesystems.com/global/en/search-results?q=clearance", desc: "Major international defense Prime with large US presence in electronics, cyber, and intelligence." },
+            { name: "Peraton", logo: "img/peraton.png", link: "https://careers.peraton.com/cleared-jobs", desc: "Major Prime formed from merged specialists; strong in space, cyber, and mission IT for IC/DoD." },
+            { name: "HII", logo: "img/hii.png", link: "https://hii.com/careers/join-our-team/?job_levels=clearance-required", desc: "Traditionally shipbuilding, now a major player in cleared IT, cyber, and data analytics (acquired Enlighten)." },
+            { name: "ManTech", logo: "img/mantech.png", link: "https://www.mantech.com/careers/security-clearance-jobs", desc: "Large contractor focused heavily on cleared work in cyber, intel analysis, and systems engineering." }
+    // We could add Jacobs, Parsons, Accenture Federal later if desired
         ]
     },
     ring3: {
@@ -39,7 +44,15 @@ const companyData = {
             { name: "Maxar", logo: "img/maxar.png", link: "https://www.maxar.com/careers", desc: "Commercial provider of high-resolution satellite imagery." },
             { name: "Capella Space", logo: "img/capella_space.png", link: "https://www.capellaspace.com/careers/", desc: "Commercial provider of high-resolution SAR (radar) imagery." },
             { name: "Umbra", logo: "img/umbra.png", link: "https://umbra.space/careers", desc: "Commercial provider of high-resolution SAR (radar) imagery." },
-            { name: "BlackSky", logo: "img/blacksky.png", link: "https://www.blacksky.com/careers/", desc: "Commercial provider of real-time satellite imagery and AI analytics." }
+            { name: "BlackSky", logo: "img/blacksky.png", link: "https://www.blacksky.com/careers/", desc: "Commercial provider of real-time satellite imagery and AI analytics." },
+            { name: "ManTech", logo: "img/mantech.png", link: "https://www.mantech.com/careers", desc: "Large contractor often acting as specialist in cyber, intelligence analysis, and systems engineering." },
+            { name: "Parsons", logo: "img/parsons.png", link: "https://www.parsons.com/careers/", desc: "Large contractor focused on cyber, AI, and intelligence solutions, often through acquisitions." },
+            { name: "Peraton", logo: "img/peraton.png", link: "https://careers.peraton.com/", desc: "Major Prime formed from merged specialist companies; strong in space, cyber, and IT." },
+            { name: "Assured Consulting Solutions (ACS)", logo: "img/acs.png", link: "https://www.assured-consulting.com/careers/", desc: "Small business specialist providing IT, cyber, and data analytics to Primes." },
+            { name: "ClearAvenue", logo: "img/clearavenue.png", link: "https://clearavenue.com/careers/", desc: "Specialist in systems engineering and IT modernization for DIA, NGA, and others." },
+            { name: "Royce Geospatial", logo: "img/roycegeo.png", link: "https://www.roycegeo.com/careers", desc: "Specialist firm focused entirely on providing GEOINT analysis and data science." },
+            { name: "Realm One", logo: "img/realm_one.png", link: "https://realmone.com/careers/", desc: "Specialist providing SIGINT, Cyber, Software Engineering, and Data Analysis expertise to the IC." }
+        // Add more here as needed
         ]
     }
 };
