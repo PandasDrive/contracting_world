@@ -1,3 +1,5 @@
+console.log('🚀 Contracting World App.js loaded successfully!');
+
 document.addEventListener('DOMContentLoaded', () => {
     // Get the NEW carousel containers from the HTML
     const row1 = document.getElementById('row-1');
@@ -404,8 +406,12 @@ let currentStep = 1;
 
 // Initialize career quiz
 function initCareerQuiz() {
+    console.log('🎯 Initializing career quiz...');
     const quizOptions = document.querySelectorAll('.quiz-option');
     const restartBtn = document.getElementById('restart-quiz');
+    
+    console.log('Found quiz options:', quizOptions.length);
+    console.log('Found restart button:', restartBtn);
     
     quizOptions.forEach(option => {
         option.addEventListener('click', handleQuizSelection);
