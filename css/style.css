@@ -318,7 +318,7 @@ body {
     position: relative;
 }
 
-/* === AURORA BACKGROUND === */
+/* === ENHANCED MAIN PAGE BACKGROUND === */
 .aurora-background {
     position: fixed;
     top: 0;
@@ -327,13 +327,13 @@ body {
     height: 100%;
     z-index: -1;
     background: 
-    radial-gradient(ellipse at 20% 20%, rgba(77, 219, 255, 0.45) 0%, transparent 60%), /* Brighter Cyan */
-    radial-gradient(ellipse at 80% 30%, rgba(138, 43, 226, 0.35) 0%, transparent 60%), /* Brighter Purple */
-    radial-gradient(ellipse at 40% 70%, rgba(0, 255, 127, 0.3) 0%, transparent 60%),  /* Brighter Green */
-    radial-gradient(ellipse at 90% 80%, rgba(255, 20, 147, 0.25) 0%, transparent 60%), /* Brighter Pink */
-    linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
-animation: auroraFlow 20s ease-in-out infinite;
-filter: blur(40px); /* ADD BLUR */
+        radial-gradient(ellipse at 20% 20%, rgba(77, 219, 255, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, rgba(138, 43, 226, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 40% 70%, rgba(0, 255, 127, 0.1) 0%, transparent 60%),
+        radial-gradient(ellipse at 90% 80%, rgba(255, 20, 147, 0.08) 0%, transparent 60%),
+        linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+    animation: auroraFlow 20s ease-in-out infinite;
+    filter: blur(40px);
 }
 
 .aurora-background::before {
@@ -344,11 +344,11 @@ filter: blur(40px); /* ADD BLUR */
     width: 100%;
     height: 100%;
     background: 
-    radial-gradient(ellipse at 60% 40%, rgba(0, 191, 255, 0.3) 0%, transparent 70%), 
-    radial-gradient(ellipse at 30% 60%, rgba(147, 51, 234, 0.25) 0%, transparent 70%), 
-    radial-gradient(ellipse at 70% 20%, rgba(34, 197, 94, 0.25) 0%, transparent 70%);
-animation: auroraFlow 25s ease-in-out infinite reverse;
-filter: blur(40px); /* ADD BLUR */
+        radial-gradient(ellipse at 60% 40%, rgba(0, 191, 255, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse at 30% 60%, rgba(147, 51, 234, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse at 70% 20%, rgba(34, 197, 94, 0.06) 0%, transparent 70%);
+    animation: auroraFlow 25s ease-in-out infinite reverse;
+    filter: blur(40px);
 }
 
 .aurora-background::after {
@@ -359,10 +359,285 @@ filter: blur(40px); /* ADD BLUR */
     width: 100%;
     height: 100%;
     background: 
-    radial-gradient(ellipse at 10% 50%, rgba(255, 69, 0, 0.2) 0%, transparent 75%), 
-    radial-gradient(ellipse at 85% 15%, rgba(138, 43, 226, 0.2) 0%, transparent 75%);
-animation: auroraFlow 30s ease-in-out infinite;
-filter: blur(40px); /* ADD BLUR */
+        radial-gradient(ellipse at 10% 50%, rgba(255, 69, 0, 0.05) 0%, transparent 75%),
+        radial-gradient(ellipse at 85% 15%, rgba(138, 43, 226, 0.05) 0%, transparent 75%);
+    animation: auroraFlow 30s ease-in-out infinite;
+    filter: blur(40px);
+}
+
+/* Intelligence Network Overlay */
+.intelligence-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+/* Grid Pattern */
+.intelligence-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(77, 219, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(77, 219, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridPulse 8s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
+}
+
+/* Data Streams */
+.data-streams-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.data-stream {
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(to bottom, 
+        transparent 0%,
+        rgba(77, 219, 255, 0.6) 20%,
+        rgba(0, 255, 127, 0.8) 50%,
+        rgba(77, 219, 255, 0.6) 80%,
+        transparent 100%
+    );
+    animation: streamFlow 6s linear infinite;
+    box-shadow: 0 0 10px rgba(77, 219, 255, 0.4);
+}
+
+.data-stream:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 8s;
+}
+
+.data-stream:nth-child(2) {
+    left: 25%;
+    animation-delay: 1s;
+    animation-duration: 7s;
+}
+
+.data-stream:nth-child(3) {
+    left: 40%;
+    animation-delay: 2s;
+    animation-duration: 9s;
+}
+
+.data-stream:nth-child(4) {
+    left: 55%;
+    animation-delay: 0.5s;
+    animation-duration: 6.5s;
+}
+
+.data-stream:nth-child(5) {
+    left: 70%;
+    animation-delay: 1.5s;
+    animation-duration: 8.5s;
+}
+
+.data-stream:nth-child(6) {
+    left: 85%;
+    animation-delay: 2.5s;
+    animation-duration: 7.5s;
+}
+
+@keyframes streamFlow {
+    0% { 
+        transform: translateY(-100px) scaleY(0);
+        opacity: 0;
+    }
+    10% { 
+        opacity: 1;
+    }
+    90% { 
+        opacity: 1;
+    }
+    100% { 
+        transform: translateY(100vh) scaleY(1);
+        opacity: 0;
+    }
+}
+
+/* Floating Data Points */
+.floating-data-points {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.data-point {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #4ddbff;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(77, 219, 255, 0.8);
+    animation: dataPointFloat 12s ease-in-out infinite;
+}
+
+.data-point:nth-child(1) {
+    top: 15%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.data-point:nth-child(2) {
+    top: 25%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.data-point:nth-child(3) {
+    top: 60%;
+    left: 10%;
+    animation-delay: 4s;
+}
+
+.data-point:nth-child(4) {
+    top: 70%;
+    right: 25%;
+    animation-delay: 6s;
+}
+
+.data-point:nth-child(5) {
+    top: 40%;
+    left: 50%;
+    animation-delay: 8s;
+}
+
+.data-point:nth-child(6) {
+    top: 80%;
+    left: 70%;
+    animation-delay: 10s;
+}
+
+@keyframes dataPointFloat {
+    0%, 100% { 
+        transform: translateY(0px) scale(1);
+        opacity: 0.6;
+    }
+    25% { 
+        transform: translateY(-20px) scale(1.2);
+        opacity: 1;
+    }
+    50% { 
+        transform: translateY(-10px) scale(0.8);
+        opacity: 0.8;
+    }
+    75% { 
+        transform: translateY(-30px) scale(1.1);
+        opacity: 0.9;
+    }
+}
+
+/* Scan Lines */
+.scan-lines-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 98px,
+        rgba(77, 219, 255, 0.03) 100px,
+        rgba(77, 219, 255, 0.03) 102px
+    );
+    animation: scanMoveMain 15s linear infinite;
+}
+
+@keyframes scanMoveMain {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Connection Lines */
+.connection-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.connection-line {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        rgba(77, 219, 255, 0.3) 20%,
+        rgba(0, 255, 127, 0.5) 50%,
+        rgba(77, 219, 255, 0.3) 80%,
+        transparent 100%
+    );
+    animation: connectionPulse 4s ease-in-out infinite;
+}
+
+.connection-line:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    width: 200px;
+    transform: rotate(15deg);
+    animation-delay: 0s;
+}
+
+.connection-line:nth-child(2) {
+    top: 60%;
+    right: 15%;
+    width: 150px;
+    transform: rotate(-25deg);
+    animation-delay: 1s;
+}
+
+.connection-line:nth-child(3) {
+    top: 40%;
+    left: 30%;
+    width: 180px;
+    transform: rotate(45deg);
+    animation-delay: 2s;
+}
+
+.connection-line:nth-child(4) {
+    bottom: 30%;
+    right: 30%;
+    width: 120px;
+    transform: rotate(-60deg);
+    animation-delay: 3s;
+}
+
+@keyframes connectionPulse {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes auroraFlow {
+    0% {
+        background-position: 0% 50%, 100% 50%, 50% 100%, 0% 0%;
+        background-size: 600% 600%, 500% 500%, 450% 450%, 500% 500%;
+    }
+    100% {
+        background-position: 100% 50%, 0% 50%, 50% 0%, 100% 100%;
+        background-size: 500% 500%, 600% 600%, 450% 450%, 550% 550%;
+    }
 }
 
 @keyframes aurora-flow {
