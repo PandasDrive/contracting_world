@@ -258,11 +258,18 @@ let quizData = {
 
 // Dynamic recommendation generator
 function generateDynamicRecommendation(background, clearance, interest) {
-    const baseRecommendation = careerRecommendations[`${background}-${clearance}-${interest}`];
+    console.log('Generating recommendation for:', { background, clearance, interest });
+    
+    // Check if we have a predefined recommendation first
+    const key = `${background}-${clearance}-${interest}`;
+    const baseRecommendation = careerRecommendations[key];
     
     if (baseRecommendation) {
+        console.log('Using predefined recommendation:', key);
         return baseRecommendation;
     }
+    
+    console.log('Generating dynamic recommendation for:', key);
     
     // Generate dynamic recommendation based on combinations
     const recommendations = {
@@ -272,6 +279,7 @@ function generateDynamicRecommendation(background, clearance, interest) {
         nextSteps: generateNextSteps(background, clearance, interest)
     };
     
+    console.log('Generated recommendation:', recommendations);
     return recommendations;
 }
 
@@ -449,8 +457,12 @@ function showResults() {
     const resultsElement = document.getElementById('results');
     const recommendationElement = document.getElementById('career-recommendation');
     
+    console.log('Quiz data:', quizData);
+    
     // Use dynamic recommendation generator
     const recommendation = generateDynamicRecommendation(quizData.background, quizData.clearance, quizData.interest);
+    
+    console.log('Final recommendation:', recommendation);
     
     // Display results
     recommendationElement.innerHTML = `
