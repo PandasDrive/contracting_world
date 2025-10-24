@@ -19,7 +19,7 @@ const companyData = {
             },
             { name: "NGA", logo: "img/nga.png", link: "https://www.nga.mil/careers/", desc: "National Geospatial-Intelligence Agency: Provides geospatial intelligence (GEOINT) from satellite and aerial imagery.", size: "government", clearance: "ts-sci" },
             { name: "NRO", logo: "img/nro.png", link: "https://www.nro.gov/Careers/", desc: "National Reconnaissance Office: Builds and operates America's spy satellites.", size: "government", clearance: "ts-sci" },
-            { name: "DIA", logo: "img/dia.png", link: "https://www.dia.mil/Careers/", desc: "Defense Intelligence Agency: Provides military intelligence to defense policymakers and warfighters.", size: "government", clearance: "ts-sci" },
+            { name: "DIA", logo: "img/dia.png", link: "https://www.dia.mil/", desc: "Defense Intelligence Agency: Provides military intelligence to defense policymakers and warfighters.", size: "government", clearance: "ts-sci" },
             { name: "CIA", logo: "img/cia.png", link: "https://www.cia.gov/careers/", desc: "Central Intelligence Agency: Provides foreign intelligence to U.S. policymakers.", size: "government", clearance: "ts-sci" }
         ]
     },
@@ -44,12 +44,12 @@ const companyData = {
             { name: "General Dynamics (GDIT)", logo: "img/gdit.png", link: "https://www.gdit.com/careers/", desc: "A 'Big 5' Prime. Major focus on IT services, cyber, and military systems.", size: "large", clearance: "ts" },
             { name: "Booz Allen Hamilton", logo: "img/booz_allen.png", link: "https://careers.boozallen.com/", desc: "A major Prime focused on consulting, cyber, data science, and analytics.", size: "medium", clearance: "ts" },
             { name: "RTX (Raytheon)", logo: "img/rtx.png", link: "https://careers.rtx.com/", desc: "A 'Big 5' Prime. Specializes in advanced sensors, missiles, and cyber.", size: "large", clearance: "ts" },
-            { name: "CACI", logo: "img/caci.png", link: "https://careers.caci.com/", desc: "A major Prime providing expertise in IT, signals intelligence, and electronic warfare.", size: "medium", clearance: "ts" },
+            { name: "CACI", logo: "img/caci.png", link: "https://www.caci.com/", desc: "A major Prime providing expertise in IT, signals intelligence, and electronic warfare.", size: "medium", clearance: "ts" },
             { name: "SAIC", logo: "img/saic.png", link: "https://www.saic.com/careers", desc: "A major Prime focused on IT modernization, logistics, and systems engineering.", size: "medium", clearance: "ts" },
-            { name: "BAE Systems", logo: "img/bae_systems.png", link: "https://jobs.baesystems.com/global/en/search-results?q=clearance", desc: "Major international defense Prime with large US presence in electronics, cyber, and intelligence.", size: "medium", clearance: "ts" },
+            { name: "BAE Systems", logo: "img/bae_systems.png", link: "https://www.baesystems.com/en/", desc: "Major international defense Prime with large US presence in electronics, cyber, and intelligence.", size: "medium", clearance: "ts" },
             { name: "Peraton", logo: "img/peraton.png", link: "https://careers.peraton.com/cleared-jobs", desc: "Major Prime formed from merged specialists; strong in space, cyber, and mission IT for IC/DoD.", size: "medium", clearance: "ts" },
             { name: "HII", logo: "img/hii.png", link: "https://hii.com/careers/join-our-team/?job_levels=clearance-required", desc: "Traditionally shipbuilding, now a major player in cleared IT, cyber, and data analytics (acquired Enlighten).", size: "medium", clearance: "ts" },
-            { name: "ManTech", logo: "img/mantech.png", link: "https://www.mantech.com/careers/security-clearance-jobs", desc: "Large contractor focused heavily on cleared work in cyber, intel analysis, and systems engineering.", size: "medium", clearance: "ts" }
+            { name: "ManTech", logo: "img/mantech.png", link: "https://www.mantech.com/", desc: "Large contractor focused heavily on cleared work in cyber, intel analysis, and systems engineering.", size: "medium", clearance: "ts" }
     // We could add Jacobs, Parsons, Accenture Federal later if desired
         ]
     },
@@ -72,7 +72,7 @@ const companyData = {
             { name: "Parsons", logo: "img/parsons.png", link: "https://www.parsons.com/careers/", desc: "Large contractor focused on cyber, AI, and intelligence solutions, often through acquisitions." },
             { name: "Peraton", logo: "img/peraton.png", link: "https://careers.peraton.com/", desc: "Major Prime formed from merged specialist companies; strong in space, cyber, and IT." },
             { name: "Assured Consulting Solutions (ACS)", logo: "img/acs.png", link: "https://www.assured-consulting.com/careers/", desc: "Small business specialist providing IT, cyber, and data analytics to Primes." },
-            { name: "ClearAvenue", logo: "img/clearavenue.png", link: "https://clearavenue.com/careers/", desc: "Specialist in systems engineering and IT modernization for DIA, NGA, and others." },
+            { name: "ClearAvenue", logo: "img/clearavenue.png", link: "https://www.clearavenue.com/careers.html", desc: "Specialist in systems engineering and IT modernization for DIA, NGA, and others." },
             { name: "Royce Geospatial", logo: "img/roycegeo.png", link: "https://www.roycegeo.com/careers", desc: "Specialist firm focused entirely on providing GEOINT analysis and data science." },
             { name: "Realm One", logo: "img/realm_one.png", link: "https://realmone.com/careers/", desc: "Specialist providing SIGINT, Cyber, Software Engineering, and Data Analysis expertise to the IC." }
         // Add more here as needed
