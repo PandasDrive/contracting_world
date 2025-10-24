@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Test - Contracting World</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .test-image {
+            margin: 20px;
+            border: 2px solid #4ddbff;
+            padding: 10px;
+            display: inline-block;
+        }
+        img {
+            max-width: 200px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Test Page</h1>
+    <p>Testing if images load correctly from GitHub Pages:</p>
+    
+    <div class="test-image">
+        <h3>NSA Logo</h3>
+        <img src="img/nsa.PNG" alt="NSA Logo" onerror="this.style.border='2px solid red'; this.alt='FAILED TO LOAD'">
+    </div>
+    
+    <div class="test-image">
+        <h3>Lockheed Martin Logo</h3>
+        <img src="img/lockheed_martin.PNG" alt="Lockheed Martin Logo" onerror="this.style.border='2px solid red'; this.alt='FAILED TO LOAD'">
+    </div>
+    
+    <div class="test-image">
+        <h3>Northrop Grumman Logo</h3>
+        <img src="img/northrop_grumman.PNG" alt="Northrop Grumman Logo" onerror="this.style.border='2px solid red'; this.alt='FAILED TO LOAD'">
+    </div>
+    
+    <div class="test-image">
+        <h3>Visionist Logo</h3>
+        <img src="img/visionist.PNG" alt="Visionist Logo" onerror="this.style.border='2px solid red'; this.alt='FAILED TO LOAD'">
+    </div>
+    
+    <p><a href="index.html" style="color: #4ddbff;">← Back to Main Site</a></p>
+</body>
+</html>
