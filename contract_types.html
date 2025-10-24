@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Types Explorer - Contracting World</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .contract-types-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .contract-type-card {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(77, 219, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .contract-type-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .contract-icon {
+            font-size: 2.5em;
+            margin-right: 20px;
+        }
+        
+        .contract-title {
+            font-size: 1.8em;
+            color: #4ddbff;
+            margin: 0;
+        }
+        
+        .contract-subtitle {
+            color: #888;
+            font-size: 1.1em;
+            margin: 5px 0 0 0;
+        }
+        
+        .contract-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .detail-section {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #4ddbff;
+        }
+        
+        .detail-section h4 {
+            color: #4ddbff;
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .risk-indicator {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+        }
+        
+        .risk-low {
+            background-color: rgba(0, 255, 127, 0.2);
+            color: #00ff7f;
+            border: 1px solid #00ff7f;
+        }
+        
+        .risk-medium {
+            background-color: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+        
+        .risk-high {
+            background-color: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+        }
+        
+        .timeline-bar {
+            background-color: rgba(0, 0, 0, 0.3);
+            height: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .timeline-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ddbff, #8a2be2);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .comparison-table {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th {
+            background-color: rgba(77, 219, 255, 0.2);
+            color: #4ddbff;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(68, 68, 68, 0.3);
+        }
+        
+        .comparison-table tr:hover {
+            background-color: rgba(77, 219, 255, 0.1);
+        }
+        
+        .interactive-calculator {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(77, 219, 255, 0.2);
+        }
+        
+        .calculator-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group label {
+            color: #4ddbff;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .input-group input, .input-group select {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(77, 219, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            color: #fff;
+            font-size: 1em;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #4ddbff;
+            box-shadow: 0 0 10px rgba(77, 219, 255, 0.3);
+        }
+        
+        .calculator-result {
+            background-color: rgba(77, 219, 255, 0.1);
+            border: 2px solid #4ddbff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .result-value {
+            font-size: 2em;
+            color: #4ddbff;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .back-link {
+            display: inline-block;
+            background-color: rgba(77, 219, 255, 0.2);
+            color: #4ddbff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 20px 0;
+            border: 1px solid #4ddbff;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background-color: #4ddbff;
+            color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-background"></div>
+    
+    <header>
+        <h1>Contract Types Explorer</h1>
+        <p>Understanding the different types of government contracts and their implications</p>
+    </header>
+
+    <div class="contract-types-container">
+        <a href="index.html" class="back-link">← Back to Main Site</a>
+
+        <!-- Fixed Price Contracts -->
+        <div class="contract-type-card">
+            <div class="contract-type-header">
+                <div class="contract-icon">💰</div>
+                <div>
+                    <h2 class="contract-title">Fixed Price Contracts (FFP)</h2>
+                    <p class="contract-subtitle">Firm Fixed Price - You get paid a set amount regardless of costs</p>
+                </div>
+            </div>
+            
+            <div class="contract-details">
+                <div class="detail-section">
+                    <h4>📊 Risk Level</h4>
+                    <span class="risk-indicator risk-high">High Risk</span>
+                    <p>Contractor bears all cost overruns</p>
+                </div>
+                <div class="detail-section">
+                    <h4>⏱️ Timeline</h4>
+                    <div class="timeline-bar">
+                        <div class="timeline-fill" style="width: 60%;"></div>
+                    </div>
+                    <p>6-18 months typical duration</p>
+                </div>
+                <div class="detail-section">
+                    <h4>💡 Best For</h4>
+                    <p>Well-defined requirements, experienced contractors, stable scope</p>
+                </div>
+                <div class="detail-section">
+                    <h4>⚠️ Watch Out For</h4>
+                    <p>Scope creep, requirement changes, cost underestimation</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cost Plus Contracts -->
+        <div class="contract-type-card">
+            <div class="contract-type-header">
+                <div class="contract-icon">📈</div>
+                <div>
+                    <h2 class="contract-title">Cost Plus Contracts (CPFF/CPIF)</h2>
+                    <p class="contract-subtitle">Cost Plus Fixed Fee / Cost Plus Incentive Fee</p>
+                </div>
+            </div>
+            
+            <div class="contract-details">
+                <div class="detail-section">
+                    <h4>📊 Risk Level</h4>
+                    <span class="risk-indicator risk-low">Low Risk</span>
+                    <p>Government pays actual costs plus fee</p>
+                </div>
+                <div class="detail-section">
+                    <h4>⏱️ Timeline</h4>
+                    <div class="timeline-bar">
+                        <div class="timeline-fill" style="width: 80%;"></div>
+                    </div>
+                    <p>1-5 years typical duration</p>
+                </div>
+                <div class="detail-section">
+                    <h4>💡 Best For</h4>
+                    <p>R&D, uncertain requirements, complex projects</p>
+                </div>
+                <div class="detail-section">
+                    <h4>⚠️ Watch Out For</h4>
+                    <p>Cost control, documentation requirements, audit scrutiny</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Time & Materials -->
+        <div class="contract-type-card">
+            <div class="contract-type-header">
+                <div class="contract-icon">⏰</div>
+                <div>
+                    <h2 class="contract-title">Time & Materials (T&M)</h2>
+                    <p class="contract-subtitle">Pay for time worked and materials used</p>
+                </div>
+            </div>
+            
+            <div class="contract-details">
+                <div class="detail-section">
+                    <h4>📊 Risk Level</h4>
+                    <span class="risk-indicator risk-medium">Medium Risk</span>
+                    <p>Shared risk between contractor and government</p>
+                </div>
+                <div class="detail-section">
+                    <h4>⏱️ Timeline</h4>
+                    <div class="timeline-bar">
+                        <div class="timeline-fill" style="width: 40%;"></div>
+                    </div>
+                    <p>3-12 months typical duration</p>
+                </div>
+                <div class="detail-section">
+                    <h4>💡 Best For</h4>
+                    <p>Short-term projects, maintenance, emergency work</p>
+                </div>
+                <div class="detail-section">
+                    <h4>⚠️ Watch Out For</h4>
+                    <p>Hourly rate caps, material markup limits, time tracking</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indefinite Delivery Contracts -->
+        <div class="contract-type-card">
+            <div class="contract-type-header">
+                <div class="contract-icon">🔄</div>
+                <div>
+                    <h2 class="contract-title">Indefinite Delivery Contracts (IDIQ)</h2>
+                    <p class="contract-subtitle">Multiple Task Orders under one master contract</p>
+                </div>
+            </div>
+            
+            <div class="contract-details">
+                <div class="detail-section">
+                    <h4>📊 Risk Level</h4>
+                    <span class="risk-indicator risk-low">Low Risk</span>
+                    <p>Steady work stream with guaranteed minimum</p>
+                </div>
+                <div class="detail-section">
+                    <h4>⏱️ Timeline</h4>
+                    <div class="timeline-bar">
+                        <div class="timeline-fill" style="width: 100%;"></div>
+                    </div>
+                    <p>3-10 years with option periods</p>
+                </div>
+                <div class="detail-section">
+                    <h4>💡 Best For</h4>
+                    <p>Ongoing services, multiple projects, established relationships</p>
+                </div>
+                <div class="detail-section">
+                    <h4>⚠️ Watch Out For</h4>
+                    <p>Competition for task orders, performance metrics</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contract Comparison Table -->
+        <div class="contract-type-card">
+            <h3 style="color: #4ddbff; text-align: center; margin-bottom: 20px;">📊 Contract Type Comparison</h3>
+            <table class="comparison-table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Contract Type</th>
+                        <th>Risk Level</th>
+                        <th>Profit Potential</th>
+                        <th>Duration</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Fixed Price (FFP)</strong></td>
+                        <td><span class="risk-indicator risk-high">High</span></td>
+                        <td>High (if efficient)</td>
+                        <td>6-18 months</td>
+                        <td>Well-defined projects</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cost Plus (CPFF)</strong></td>
+                        <td><span class="risk-indicator risk-low">Low</span></td>
+                        <td>Fixed fee</td>
+                        <td>1-5 years</td>
+                        <td>R&D, complex projects</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Time & Materials</strong></td>
+                        <td><span class="risk-indicator risk-medium">Medium</span></td>
+                        <td>Hourly rates</td>
+                        <td>3-12 months</td>
+                        <td>Short-term work</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IDIQ</strong></td>
+                        <td><span class="risk-indicator risk-low">Low</span></td>
+                        <td>Variable</td>
+                        <td>3-10 years</td>
+                        <td>Ongoing services</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Interactive Contract Calculator -->
+        <div class="interactive-calculator">
+            <h3 style="color: #4ddbff; text-align: center; margin-bottom: 20px;">🧮 Contract Profit Calculator</h3>
+            <p style="text-align: center; color: #888; margin-bottom: 30px;">Calculate potential profit based on contract type and your efficiency</p>
+            
+            <div class="calculator-inputs">
+                <div class="input-group">
+                    <label for="contract-value">Contract Value ($)</label>
+                    <input type="number" id="contract-value" placeholder="1000000" value="1000000">
+                </div>
+                <div class="input-group">
+                    <label for="contract-type">Contract Type</label>
+                    <select id="contract-type">
+                        <option value="ffp">Fixed Price (FFP)</option>
+                        <option value="cpff">Cost Plus Fixed Fee</option>
+                        <option value="tm">Time & Materials</option>
+                        <option value="idiq">IDIQ</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="efficiency">Your Efficiency (%)</label>
+                    <input type="number" id="efficiency" placeholder="85" value="85" min="50" max="120">
+                </div>
+                <div class="input-group">
+                    <label for="overhead">Overhead Rate (%)</label>
+                    <input type="number" id="overhead" placeholder="25" value="25" min="10" max="50">
+                </div>
+            </div>
+            
+            <div class="calculator-result">
+                <h4>Estimated Profit</h4>
+                <div class="result-value" id="profit-result">$0</div>
+                <p id="profit-explanation">Select contract parameters to calculate profit</p>
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="contract-type-card">
+            <h3 style="color: #4ddbff; margin-bottom: 20px;">🎯 Key Takeaways for New Contractors</h3>
+            <div class="contract-details">
+                <div class="detail-section">
+                    <h4>🏆 Start With Lower Risk</h4>
+                    <p>Begin with Cost Plus or IDIQ contracts to build experience and relationships</p>
+                </div>
+                <div class="detail-section">
+                    <h4>📋 Understand Requirements</h4>
+                    <p>Fixed Price contracts require crystal-clear requirements and scope definition</p>
+                </div>
+                <div class="detail-section">
+                    <h4>💰 Price Competitively</h4>
+                    <p>Your pricing strategy should match the contract type and risk level</p>
+                </div>
+                <div class="detail-section">
+                    <h4>📊 Track Everything</h4>
+                    <p>Detailed cost tracking is essential for all contract types</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Contract Profit Calculator
+        function calculateProfit() {
+            const contractValue = parseFloat(document.getElementById('contract-value').value) || 0;
+            const contractType = document.getElementById('contract-type').value;
+            const efficiency = parseFloat(document.getElementById('efficiency').value) || 85;
+            const overhead = parseFloat(document.getElementById('overhead').value) || 25;
+            
+            let profit = 0;
+            let explanation = '';
+            
+            switch(contractType) {
+                case 'ffp':
+                    // Fixed Price: Profit = Contract Value - Actual Costs
+                    const actualCosts = contractValue * (100 - efficiency) / 100;
+                    profit = contractValue - actualCosts;
+                    explanation = `Fixed Price: You deliver for $${actualCosts.toLocaleString()}, keeping $${profit.toLocaleString()} as profit`;
+                    break;
+                case 'cpff':
+                    // Cost Plus: Fixed fee percentage
+                    const feeRate = 0.08; // 8% typical fee
+                    profit = contractValue * feeRate;
+                    explanation = `Cost Plus: Government pays actual costs plus $${profit.toLocaleString()} fixed fee`;
+                    break;
+                case 'tm':
+                    // Time & Materials: Hourly rate markup
+                    const hourlyMarkup = 0.15; // 15% markup
+                    profit = contractValue * hourlyMarkup;
+                    explanation = `Time & Materials: $${profit.toLocaleString()} profit from hourly rate markup`;
+                    break;
+                case 'idiq':
+                    // IDIQ: Variable based on task orders
+                    const idiqRate = 0.12; // 12% average
+                    profit = contractValue * idiqRate;
+                    explanation = `IDIQ: $${profit.toLocaleString()} average profit across task orders`;
+                    break;
+            }
+            
+            document.getElementById('profit-result').textContent = '$' + profit.toLocaleString();
+            document.getElementById('profit-explanation').textContent = explanation;
+        }
+        
+        // Add event listeners
+        document.getElementById('contract-value').addEventListener('input', calculateProfit);
+        document.getElementById('contract-type').addEventListener('change', calculateProfit);
+        document.getElementById('efficiency').addEventListener('input', calculateProfit);
+        document.getElementById('overhead').addEventListener('input', calculateProfit);
+        
+        // Calculate on page load
+        calculateProfit();
+    </script>
+</body>
+</html>

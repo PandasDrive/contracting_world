@@ -405,6 +405,39 @@ function initTooltips() {
             tooltip.className = 'tooltip';
             tooltip.textContent = tooltipText;
             trigger.appendChild(tooltip);
+            
+            // Add hover event listeners for better positioning
+            trigger.addEventListener('mouseenter', function() {
+                const rect = trigger.getBoundingClientRect();
+                const tooltipRect = tooltip.getBoundingClientRect();
+                
+                // Check if tooltip would go off the top of the screen
+                if (rect.top - tooltipRect.height < 0) {
+                    tooltip.style.bottom = 'auto';
+                    tooltip.style.top = '100%';
+                    tooltip.style.marginBottom = '0';
+                    tooltip.style.marginTop = '8px';
+                } else {
+                    tooltip.style.bottom = '100%';
+                    tooltip.style.top = 'auto';
+                    tooltip.style.marginBottom = '8px';
+                    tooltip.style.marginTop = '0';
+                }
+                
+                // Check if tooltip would go off the left side
+                if (rect.left + (tooltipRect.width / 2) < 0) {
+                    tooltip.style.left = '0';
+                    tooltip.style.transform = 'none';
+                } else if (rect.right - (tooltipRect.width / 2) > window.innerWidth) {
+                    tooltip.style.left = 'auto';
+                    tooltip.style.right = '0';
+                    tooltip.style.transform = 'none';
+                } else {
+                    tooltip.style.left = '50%';
+                    tooltip.style.right = 'auto';
+                    tooltip.style.transform = 'translateX(-50%)';
+                }
+            });
         }
     });
 }

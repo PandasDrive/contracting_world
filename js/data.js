@@ -12,7 +12,7 @@ const companyData = {
                 desc: "National Security Agency: The U.S. leader in signals intelligence (SIGINT) and cybersecurity.", 
                 size: "government", 
                 clearance: "ts-sci",
-                clearancejobs: "https://www.clearancejobs.com/jobs/nsa",
+                clearancejobs: "https://www.clearancejobs.com/jobs/?q=NSA",
                 salaryRange: "$80k-$180k",
                 locations: ["Fort Meade, MD", "San Antonio, TX", "Denver, CO"],
                 specialties: ["SIGINT", "Cybersecurity", "Cryptanalysis", "Data Science"]
@@ -29,17 +29,17 @@ const companyData = {
             { 
                 name: "Lockheed Martin", 
                 logo: "img/lockheed_martin.png", 
-                link: "https://www.lockheedmartinjobs.com/", 
+                link: "https://www.lockheedmartin.com/en-us/careers.html", 
                 desc: "A 'Big 5' Prime. Manages massive aerospace, defense, and intelligence contracts.", 
                 size: "large", 
                 clearance: "ts",
-                clearancejobs: "https://www.clearancejobs.com/jobs/lockheed-martin",
+                clearancejobs: "https://www.clearancejobs.com/jobs/?q=Lockheed+Martin",
                 salaryRange: "$70k-$200k",
                 locations: ["Bethesda, MD", "Fort Worth, TX", "Denver, CO", "Sunnyvale, CA"],
                 specialties: ["Aerospace", "Missile Defense", "Space Systems", "Cybersecurity"],
                 contracts: ["F-35", "THAAD", "Space Fence", "Cyber Solutions"]
             },
-            { name: "Northrop Grumman", logo: "img/northrop_grumman.png", link: "https://www.ngc.com/careers/", desc: "A 'Big 5' Prime. Leader in space systems, cyber, and advanced aircraft.", size: "large", clearance: "ts" },
+            { name: "Northrop Grumman", logo: "img/northrop_grumman.png", link: "https://www.northropgrumman.com/careers/", desc: "A 'Big 5' Prime. Leader in space systems, cyber, and advanced aircraft.", size: "large", clearance: "ts" },
             { name: "Leidos", logo: "img/leidos.png", link: "https://careers.leidos.com/", desc: "A major Prime contractor managing large-scale IT, health, and intelligence contracts.", size: "large", clearance: "ts" },
             { name: "General Dynamics (GDIT)", logo: "img/gdit.png", link: "https://www.gdit.com/careers/", desc: "A 'Big 5' Prime. Major focus on IT services, cyber, and military systems.", size: "large", clearance: "ts" },
             { name: "Booz Allen Hamilton", logo: "img/booz_allen.png", link: "https://careers.boozallen.com/", desc: "A major Prime focused on consulting, cyber, data science, and analytics.", size: "medium", clearance: "ts" },
@@ -57,7 +57,7 @@ const companyData = {
         name: "Level 3: The Specialists",
         companies: [
             { name: "Visionist", logo: "img/visionist.png", link: "https://www.visionistinc.com/careers", desc: "Specialist in data science, analytics, and software engineering for the IC.", size: "small", clearance: "ts-sci" },
-            { name: "Zeta Associates", logo: "img/zeta.png", link: "https://www.lockheedmartinjobs.com/", desc: "A Lockheed Martin company. Elite specialist in SIGINT and geolocation.", size: "small", clearance: "ts-sci" },
+            { name: "Zeta Associates", logo: "img/zeta.png", link: "https://www.lockheedmartin.com/en-us/careers.html", desc: "A Lockheed Martin company. Elite specialist in SIGINT and geolocation.", size: "small", clearance: "ts-sci" },
             { name: "NASK", logo: "img/nask.png", link: "https://nask.world/company/", desc: "Specialist in SIGINT, geolocation, and RF engineering for NASIC and the IC." },
             { name: "MesaVita", logo: "img/mesavita.png", link: "https://www.mesavita.com/services", desc: "Small business specialist in data science, cyber, and mission operations." },
             { name: "Praxis Engineering", logo: "img/praxis.png", link: "https://www.gdit.com/careers/", desc: "A GDIT company. Legendary for its high-end cyber and SIGINT engineers.", size: "small", clearance: "ts-sci" },

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Lifecycle Tracker - Contracting World</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .lifecycle-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .contract-tracker {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(77, 219, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .contract-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #4ddbff;
+            transition: all 0.3s ease;
+        }
+        
+        .contract-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(77, 219, 255, 0.2);
+        }
+        
+        .contract-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .contract-title {
+            font-size: 1.4em;
+            color: #4ddbff;
+            margin: 0;
+        }
+        
+        .contract-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .status-active {
+            background-color: rgba(0, 255, 127, 0.2);
+            color: #00ff7f;
+            border: 1px solid #00ff7f;
+        }
+        
+        .status-recompete {
+            background-color: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+        
+        .status-awarded {
+            background-color: rgba(77, 219, 255, 0.2);
+            color: #4ddbff;
+            border: 1px solid #4ddbff;
+        }
+        
+        .status-expired {
+            background-color: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+        }
+        
+        .countdown-timer {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ffa500;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            background-color: rgba(0, 0, 0, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ddbff, #8a2be2);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .contract-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .detail-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .detail-label {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            color: #fff;
+            font-weight: bold;
+        }
+        
+        .impact-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin: 2px;
+        }
+        
+        .impact-high {
+            background-color: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+        }
+        
+        .impact-medium {
+            background-color: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+        
+        .impact-low {
+            background-color: rgba(0, 255, 127, 0.2);
+            color: #00ff7f;
+            border: 1px solid #00ff7f;
+        }
+        
+        .filter-controls {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(77, 219, 255, 0.2);
+        }
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-group label {
+            color: #4ddbff;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .filter-group select {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(77, 219, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            color: #fff;
+            font-size: 1em;
+        }
+        
+        .lifecycle-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .phase-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .phase-card.active {
+            border-color: #4ddbff;
+            background-color: rgba(77, 219, 255, 0.1);
+        }
+        
+        .phase-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .phase-title {
+            color: #4ddbff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .phase-duration {
+            color: #888;
+            font-size: 0.9em;
+        }
+        
+        .alert-banner {
+            background-color: rgba(255, 165, 0, 0.2);
+            border: 1px solid #ffa500;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #ffa500;
+        }
+        
+        .alert-banner h4 {
+            margin: 0 0 10px 0;
+            color: #ffa500;
+        }
+        
+        .back-link {
+            display: inline-block;
+            background-color: rgba(77, 219, 255, 0.2);
+            color: #4ddbff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 20px 0;
+            border: 1px solid #4ddbff;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background-color: #4ddbff;
+            color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-background"></div>
+    
+    <header>
+        <h1>Contract Lifecycle Tracker</h1>
+        <p>Monitor contract status, re-compete timelines, and job market impact</p>
+    </header>
+
+    <div class="lifecycle-container">
+        <a href="index.html" class="back-link">← Back to Main Site</a>
+
+        <!-- Alert Banner for Upcoming Re-competes -->
+        <div class="alert-banner">
+            <h4>⚠️ High Impact Re-competes This Quarter</h4>
+            <p>3 major contracts worth $2.5B+ are up for re-compete in the next 90 days. This typically triggers hiring freezes and job market volatility.</p>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="filter-controls">
+            <h3 style="color: #4ddbff; margin-bottom: 20px;">🔍 Filter Contracts</h3>
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label for="status-filter">Contract Status</label>
+                    <select id="status-filter">
+                        <option value="all">All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="recompete">Re-compete</option>
+                        <option value="awarded">Recently Awarded</option>
+                        <option value="expired">Expired</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="agency-filter">Government Agency</label>
+                    <select id="agency-filter">
+                        <option value="all">All Agencies</option>
+                        <option value="NSA">NSA</option>
+                        <option value="NGA">NGA</option>
+                        <option value="NRO">NRO</option>
+                        <option value="DIA">DIA</option>
+                        <option value="CIA">CIA</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="impact-filter">Job Market Impact</label>
+                    <select id="impact-filter">
+                        <option value="all">All Impact Levels</option>
+                        <option value="high">High Impact</option>
+                        <option value="medium">Medium Impact</option>
+                        <option value="low">Low Impact</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="value-filter">Contract Value</label>
+                    <select id="value-filter">
+                        <option value="all">All Values</option>
+                        <option value="billion">$1B+</option>
+                        <option value="hundred-million">$100M+</option>
+                        <option value="million">$10M+</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contract Lifecycle Phases -->
+        <div class="contract-tracker">
+            <h3 style="color: #4ddbff; text-align: center; margin-bottom: 20px;">📅 Contract Lifecycle Phases</h3>
+            <div class="lifecycle-phases">
+                <div class="phase-card">
+                    <div class="phase-icon">📋</div>
+                    <div class="phase-title">Planning</div>
+                    <div class="phase-duration">6-12 months</div>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-icon">📢</div>
+                    <div class="phase-title">RFP Release</div>
+                    <div class="phase-duration">30-60 days</div>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-icon">📝</div>
+                    <div class="phase-title">Proposal</div>
+                    <div class="phase-duration">30-45 days</div>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-icon">⏳</div>
+                    <div class="phase-title">Evaluation</div>
+                    <div class="phase-duration">60-120 days</div>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-icon">🏆</div>
+                    <div class="phase-title">Award</div>
+                    <div class="phase-duration">1-30 days</div>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-icon">🔄</div>
+                    <div class="phase-title">Re-compete</div>
+                    <div class="phase-duration">12-18 months</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contract Cards Container -->
+        <div id="contracts-container">
+            <!-- Contracts will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Contract data
+        const contracts = [
+            {
+                id: 1,
+                title: "NSA Cybersecurity Operations",
+                agency: "NSA",
+                value: "$2.1B",
+                status: "recompete",
+                daysRemaining: 45,
+                progress: 85,
+                impact: "high",
+                prime: "Lockheed Martin",
+                description: "Critical cybersecurity operations and threat analysis",
+                employees: "2,500+",
+                locations: ["Fort Meade, MD", "San Antonio, TX"],
+                specialties: ["Cybersecurity", "Threat Analysis", "Incident Response"]
+            },
+            {
+                id: 2,
+                title: "NGA Geospatial Intelligence",
+                agency: "NGA",
+                value: "$1.8B",
+                status: "active",
+                daysRemaining: 420,
+                progress: 25,
+                impact: "high",
+                prime: "Northrop Grumman",
+                description: "Satellite imagery analysis and geospatial intelligence",
+                employees: "1,800+",
+                locations: ["Springfield, VA", "St. Louis, MO"],
+                specialties: ["GEOINT", "Satellite Analysis", "GIS"]
+            },
+            {
+                id: 3,
+                title: "DIA Military Intelligence",
+                agency: "DIA",
+                value: "$950M",
+                status: "awarded",
+                daysRemaining: 0,
+                progress: 5,
+                impact: "medium",
+                prime: "Booz Allen Hamilton",
+                description: "Military intelligence analysis and reporting",
+                employees: "1,200+",
+                locations: ["Washington, DC", "Hawaii"],
+                specialties: ["Military Intelligence", "Analysis", "Reporting"]
+            },
+            {
+                id: 4,
+                title: "NRO Satellite Operations",
+                agency: "NRO",
+                value: "$3.2B",
+                status: "recompete",
+                daysRemaining: 78,
+                progress: 70,
+                impact: "high",
+                prime: "RTX",
+                description: "Satellite operations and ground systems",
+                employees: "3,000+",
+                locations: ["Chantilly, VA", "Colorado Springs, CO"],
+                specialties: ["Satellite Operations", "Ground Systems", "Space"]
+            },
+            {
+                id: 5,
+                title: "CIA Data Analytics",
+                agency: "CIA",
+                value: "$650M",
+                status: "active",
+                daysRemaining: 280,
+                progress: 40,
+                impact: "medium",
+                prime: "CACI",
+                description: "Big data analytics and intelligence processing",
+                employees: "800+",
+                locations: ["McLean, VA", "Denver, CO"],
+                specialties: ["Data Analytics", "Machine Learning", "Big Data"]
+            },
+            {
+                id: 6,
+                title: "NSA Signals Intelligence",
+                agency: "NSA",
+                value: "$1.4B",
+                status: "expired",
+                daysRemaining: -30,
+                progress: 100,
+                impact: "high",
+                prime: "Leidos",
+                description: "Signals intelligence collection and analysis",
+                employees: "1,500+",
+                locations: ["Fort Meade, MD", "Georgia"],
+                specialties: ["SIGINT", "RF Engineering", "Analysis"]
+            }
+        ];
+
+        // Filter functions
+        function filterContracts() {
+            const statusFilter = document.getElementById('status-filter').value;
+            const agencyFilter = document.getElementById('agency-filter').value;
+            const impactFilter = document.getElementById('impact-filter').value;
+            const valueFilter = document.getElementById('value-filter').value;
+
+            let filteredContracts = contracts.filter(contract => {
+                if (statusFilter !== 'all' && contract.status !== statusFilter) return false;
+                if (agencyFilter !== 'all' && contract.agency !== agencyFilter) return false;
+                if (impactFilter !== 'all' && contract.impact !== impactFilter) return false;
+                
+                if (valueFilter !== 'all') {
+                    const value = parseFloat(contract.value.replace(/[$,BM]/g, ''));
+                    if (valueFilter === 'billion' && value < 1000) return false;
+                    if (valueFilter === 'hundred-million' && (value < 100 || value >= 1000)) return false;
+                    if (valueFilter === 'million' && (value < 10 || value >= 100)) return false;
+                }
+                
+                return true;
+            });
+
+            renderContracts(filteredContracts);
+        }
+
+        function renderContracts(contractsToRender) {
+            const container = document.getElementById('contracts-container');
+            container.innerHTML = '';
+
+            contractsToRender.forEach(contract => {
+                const contractCard = document.createElement('div');
+                contractCard.className = 'contract-card';
+                
+                const statusClass = `status-${contract.status}`;
+                const impactClass = `impact-${contract.impact}`;
+                
+                contractCard.innerHTML = `
+                    <div class="contract-header">
+                        <h3 class="contract-title">${contract.title}</h3>
+                        <span class="contract-status ${statusClass}">${contract.status.toUpperCase()}</span>
+                    </div>
+                    
+                    <div class="contract-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Agency</div>
+                            <div class="detail-value">${contract.agency}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Value</div>
+                            <div class="detail-value">${contract.value}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Prime</div>
+                            <div class="detail-value">${contract.prime}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Employees</div>
+                            <div class="detail-value">${contract.employees}</div>
+                        </div>
+                    </div>
+                    
+                    <p style="color: #888; margin: 15px 0;">${contract.description}</p>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${contract.progress}%;"></div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0;">
+                        <div class="countdown-timer">
+                            ${contract.daysRemaining > 0 ? `${contract.daysRemaining} days remaining` : 
+                              contract.daysRemaining === 0 ? 'Awarded Today!' : 
+                              `${Math.abs(contract.daysRemaining)} days expired`}
+                        </div>
+                        <span class="impact-indicator ${impactClass}">${contract.impact.toUpperCase()} IMPACT</span>
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <strong style="color: #4ddbff;">Locations:</strong> ${contract.locations.join(', ')}<br>
+                        <strong style="color: #4ddbff;">Specialties:</strong> ${contract.specialties.join(', ')}
+                    </div>
+                `;
+                
+                container.appendChild(contractCard);
+            });
+        }
+
+        // Add event listeners
+        document.getElementById('status-filter').addEventListener('change', filterContracts);
+        document.getElementById('agency-filter').addEventListener('change', filterContracts);
+        document.getElementById('impact-filter').addEventListener('change', filterContracts);
+        document.getElementById('value-filter').addEventListener('change', filterContracts);
+
+        // Initialize
+        renderContracts(contracts);
+
+        // Update countdown timers every minute
+        setInterval(() => {
+            const countdownElements = document.querySelectorAll('.countdown-timer');
+            countdownElements.forEach(element => {
+                // Simulate countdown updates
+                const text = element.textContent;
+                if (text.includes('days remaining')) {
+                    const days = parseInt(text.match(/\d+/)[0]);
+                    if (days > 0) {
+                        element.textContent = `${days - 1} days remaining`;
+                    }
+                }
+            });
+        }, 60000); // Update every minute
+    </script>
+</body>
+</html>

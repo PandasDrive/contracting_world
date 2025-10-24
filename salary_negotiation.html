@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Negotiation Simulator - Contracting World</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .simulator-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .simulator-card {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(77, 219, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .scenario-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .scenario-option {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .scenario-option:hover {
+            border-color: #4ddbff;
+            background-color: rgba(77, 219, 255, 0.1);
+        }
+        
+        .scenario-option.selected {
+            border-color: #4ddbff;
+            background-color: rgba(77, 219, 255, 0.2);
+        }
+        
+        .scenario-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .scenario-title {
+            color: #4ddbff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .scenario-desc {
+            color: #888;
+            font-size: 0.9em;
+        }
+        
+        .negotiation-interface {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .negotiation-interface.active {
+            display: block;
+        }
+        
+        .offer-display {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .offer-amount {
+            font-size: 2.5em;
+            color: #4ddbff;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .offer-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .breakdown-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .breakdown-label {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .breakdown-value {
+            color: #fff;
+            font-weight: bold;
+        }
+        
+        .negotiation-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .control-group label {
+            color: #4ddbff;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .control-group input, .control-group select {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(77, 219, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            color: #fff;
+            font-size: 1em;
+        }
+        
+        .control-group input:focus, .control-group select:focus {
+            outline: none;
+            border-color: #4ddbff;
+            box-shadow: 0 0 10px rgba(77, 219, 255, 0.3);
+        }
+        
+        .negotiation-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .negotiation-btn {
+            background-color: rgba(77, 219, 255, 0.2);
+            color: #4ddbff;
+            border: 1px solid #4ddbff;
+            border-radius: 25px;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+        
+        .negotiation-btn:hover {
+            background-color: #4ddbff;
+            color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+        
+        .negotiation-btn.accept {
+            background-color: rgba(0, 255, 127, 0.2);
+            color: #00ff7f;
+            border-color: #00ff7f;
+        }
+        
+        .negotiation-btn.accept:hover {
+            background-color: #00ff7f;
+            color: #1a1a1a;
+        }
+        
+        .negotiation-btn.counter {
+            background-color: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border-color: #ffa500;
+        }
+        
+        .negotiation-btn.counter:hover {
+            background-color: #ffa500;
+            color: #1a1a1a;
+        }
+        
+        .negotiation-btn.reject {
+            background-color: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border-color: #ff6b6b;
+        }
+        
+        .negotiation-btn.reject:hover {
+            background-color: #ff6b6b;
+            color: #1a1a1a;
+        }
+        
+        .response-display {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #4ddbff;
+        }
+        
+        .response-text {
+            color: #fff;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .response-outcome {
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .outcome-success {
+            background-color: rgba(0, 255, 127, 0.2);
+            color: #00ff7f;
+            border: 1px solid #00ff7f;
+        }
+        
+        .outcome-warning {
+            background-color: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+        
+        .outcome-danger {
+            background-color: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+        }
+        
+        .market-data {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .market-chart {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .chart-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .chart-bar {
+            background-color: rgba(0, 0, 0, 0.3);
+            height: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .chart-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ddbff, #8a2be2);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .tips-section {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .tip-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #4ddbff;
+        }
+        
+        .tip-title {
+            color: #4ddbff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .tip-text {
+            color: #888;
+        }
+        
+        .back-link {
+            display: inline-block;
+            background-color: rgba(77, 219, 255, 0.2);
+            color: #4ddbff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 20px 0;
+            border: 1px solid #4ddbff;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background-color: #4ddbff;
+            color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-background"></div>
+    
+    <header>
+        <h1>Salary Negotiation Simulator</h1>
+        <p>Practice negotiation scenarios and learn market rates for contracting positions</p>
+    </header>
+
+    <div class="simulator-container">
+        <a href="index.html" class="back-link">← Back to Main Site</a>
+
+        <!-- Scenario Selection -->
+        <div class="simulator-card">
+            <h3 style="color: #4ddbff; text-align: center; margin-bottom: 20px;">🎯 Choose Your Negotiation Scenario</h3>
+            <div class="scenario-selector">
+                <div class="scenario-option" data-scenario="entry-level">
+                    <div class="scenario-icon">🎓</div>
+                    <div class="scenario-title">Entry Level</div>
+                    <div class="scenario-desc">First contracting job, no clearance</div>
+                </div>
+                <div class="scenario-option" data-scenario="cleared-professional">
+                    <div class="scenario-icon">🛡️</div>
+                    <div class="scenario-title">Cleared Professional</div>
+                    <div class="scenario-desc">TS/SCI clearance, 3-5 years experience</div>
+                </div>
+                <div class="scenario-option" data-scenario="senior-engineer">
+                    <div class="scenario-icon">⚙️</div>
+                    <div class="scenario-title">Senior Engineer</div>
+                    <div class="scenario-desc">10+ years, specialized skills</div>
+                </div>
+                <div class="scenario-option" data-scenario="management">
+                    <div class="scenario-icon">👔</div>
+                    <div class="scenario-title">Management</div>
+                    <div class="scenario-desc">Program manager, team lead</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Data Display -->
+        <div class="market-data">
+            <h3 style="color: #4ddbff; text-align: center; margin-bottom: 20px;">📊 Current Market Data</h3>
+            <div class="market-chart">
+                <div class="chart-item">
+                    <div class="chart-label">Entry Level</div>
+                    <div class="chart-bar">
+                        <div class="chart-fill" style="width: 40%;"></div>
+                    </div>
+                    <div class="chart-value">$65k-$85k</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-label">Mid Level</div>
+                    <div class="chart-bar">
+                        <div class="chart-fill" style="width: 60%;"></div>
+                    </div>
+                    <div class="chart-value">$85k-$120k</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-label">Senior Level</div>
+                    <div class="chart-bar">
+                        <div class="chart-fill" style="width: 80%;"></div>
+                    </div>
+                    <div class="chart-value">$120k-$180k</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-label">Management</div>
+                    <div class="chart-bar">
+                        <div class="chart-fill" style="width: 100%;"></div>
+                    </div>
+                    <div class="chart-value">$150k-$250k+</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Negotiation Interface -->
+        <div class="negotiation-interface" id="negotiation-interface">
+            <div class="simulator-card">
+                <h3 style="color: #4ddbff; text-align: center; margin-bottom: 20px;">💰 Current Offer</h3>
+                
+                <div class="offer-display">
+                    <div class="offer-amount" id="current-offer">$0</div>
+                    <p style="color: #888;">Base salary offer</p>
+                </div>
+                
+                <div class="offer-breakdown">
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">Base Salary</div>
+                        <div class="breakdown-value" id="base-salary">$0</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">Benefits Value</div>
+                        <div class="breakdown-value" id="benefits-value">$0</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">Total Package</div>
+                        <div class="breakdown-value" id="total-package">$0</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">Market Position</div>
+                        <div class="breakdown-value" id="market-position">N/A</div>
+                    </div>
+                </div>
+                
+                <div class="negotiation-controls">
+                    <div class="control-group">
+                        <label for="experience-years">Years of Experience</label>
+                        <input type="number" id="experience-years" min="0" max="20" value="3">
+                    </div>
+                    <div class="control-group">
+                        <label for="clearance-level">Security Clearance</label>
+                        <select id="clearance-level">
+                            <option value="none">None</option>
+                            <option value="secret">Secret</option>
+                            <option value="ts">Top Secret</option>
+                            <option value="ts-sci">TS/SCI</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="location">Location</label>
+                        <select id="location">
+                            <option value="dc">DC Metro Area</option>
+                            <option value="md">Maryland</option>
+                            <option value="va">Virginia</option>
+                            <option value="co">Colorado</option>
+                            <option value="tx">Texas</option>
+                            <option value="ca">California</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="skills">Specialized Skills</label>
+                        <select id="skills">
+                            <option value="general">General IT</option>
+                            <option value="cyber">Cybersecurity</option>
+                            <option value="cloud">Cloud Computing</option>
+                            <option value="ai">AI/ML</option>
+                            <option value="space">Space Systems</option>
+                            <option value="sigint">SIGINT</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="negotiation-buttons">
+                    <button class="negotiation-btn accept" onclick="negotiate('accept')">✅ Accept Offer</button>
+                    <button class="negotiation-btn counter" onclick="negotiate('counter')">🤝 Counter Offer</button>
+                    <button class="negotiation-btn reject" onclick="negotiate('reject')">❌ Reject Offer</button>
+                </div>
+                
+                <div class="response-display" id="response-display" style="display: none;">
+                    <div class="response-text" id="response-text"></div>
+                    <div class="response-outcome" id="response-outcome"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Negotiation Tips -->
+        <div class="tips-section">
+            <h3 style="color: #4ddbff; text-align: center; margin-bottom: 20px;">💡 Negotiation Tips</h3>
+            <div class="tip-item">
+                <div class="tip-title">Research Market Rates</div>
+                <div class="tip-text">Use ClearanceJobs salary data and Glassdoor to understand current market rates for your role and location.</div>
+            </div>
+            <div class="tip-item">
+                <div class="tip-title">Highlight Your Value</div>
+                <div class="tip-text">Emphasize your clearance level, specialized skills, and relevant experience that directly benefits the contract.</div>
+            </div>
+            <div class="tip-item">
+                <div class="tip-title">Consider Total Package</div>
+                <div class="tip-text">Look beyond base salary - consider benefits, PTO, remote work options, and professional development opportunities.</div>
+            </div>
+            <div class="tip-item">
+                <div class="tip-title">Timing Matters</div>
+                <div class="tip-text">Negotiate when you have leverage - during contract re-competes or when you have multiple offers.</div>
+            </div>
+            <div class="tip-item">
+                <div class="tip-title">Be Professional</div>
+                <div class="tip-text">Maintain a collaborative tone. Remember, you're building a long-term relationship with the company.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Scenario data
+        const scenarios = {
+            'entry-level': {
+                baseSalary: 70000,
+                benefits: 15000,
+                marketRange: [65000, 85000],
+                title: 'Entry Level Software Engineer'
+            },
+            'cleared-professional': {
+                baseSalary: 95000,
+                benefits: 20000,
+                marketRange: [85000, 120000],
+                title: 'Cleared Software Engineer'
+            },
+            'senior-engineer': {
+                baseSalary: 140000,
+                benefits: 25000,
+                marketRange: [120000, 180000],
+                title: 'Senior Software Engineer'
+            },
+            'management': {
+                baseSalary: 180000,
+                benefits: 30000,
+                marketRange: [150000, 250000],
+                title: 'Program Manager'
+            }
+        };
+
+        let currentScenario = null;
+        let currentOffer = 0;
+        let negotiationCount = 0;
+
+        // Initialize scenario selection
+        document.querySelectorAll('.scenario-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove previous selection
+                document.querySelectorAll('.scenario-option').forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selection to clicked option
+                this.classList.add('selected');
+                
+                // Set current scenario
+                currentScenario = this.dataset.scenario;
+                
+                // Show negotiation interface
+                document.getElementById('negotiation-interface').classList.add('active');
+                
+                // Initialize offer
+                initializeOffer();
+            });
+        });
+
+        function initializeOffer() {
+            const scenario = scenarios[currentScenario];
+            currentOffer = scenario.baseSalary;
+            negotiationCount = 0;
+            
+            updateOfferDisplay();
+        }
+
+        function updateOfferDisplay() {
+            const scenario = scenarios[currentScenario];
+            const benefits = scenario.benefits;
+            const totalPackage = currentOffer + benefits;
+            
+            // Calculate market position
+            const marketMin = scenario.marketRange[0];
+            const marketMax = scenario.marketRange[1];
+            let marketPosition = 'Below Market';
+            
+            if (currentOffer >= marketMax) {
+                marketPosition = 'Above Market';
+            } else if (currentOffer >= marketMin) {
+                marketPosition = 'Market Rate';
+            }
+            
+            // Update display
+            document.getElementById('current-offer').textContent = '$' + currentOffer.toLocaleString();
+            document.getElementById('base-salary').textContent = '$' + currentOffer.toLocaleString();
+            document.getElementById('benefits-value').textContent = '$' + benefits.toLocaleString();
+            document.getElementById('total-package').textContent = '$' + totalPackage.toLocaleString();
+            document.getElementById('market-position').textContent = marketPosition;
+        }
+
+        function negotiate(action) {
+            const scenario = scenarios[currentScenario];
+            const marketMin = scenario.marketRange[0];
+            const marketMax = scenario.marketRange[1];
+            
+            let responseText = '';
+            let outcomeClass = '';
+            let outcomeText = '';
+            
+            switch(action) {
+                case 'accept':
+                    responseText = `You accepted the offer of $${currentOffer.toLocaleString()}. Congratulations! You'll start in 2 weeks.`;
+                    outcomeClass = 'outcome-success';
+                    outcomeText = '✅ Offer Accepted';
+                    break;
+                    
+                case 'counter':
+                    negotiationCount++;
+                    const counterAmount = Math.min(currentOffer * 1.1, marketMax);
+                    
+                    if (negotiationCount <= 2) {
+                        responseText = `You countered with $${counterAmount.toLocaleString()}. The hiring manager says: "We can meet you at $${Math.floor(counterAmount * 0.95).toLocaleString()}. This is our best offer."`;
+                        currentOffer = Math.floor(counterAmount * 0.95);
+                        outcomeClass = 'outcome-warning';
+                        outcomeText = '🤝 Counter Offer Made';
+                    } else {
+                        responseText = `You've already countered twice. The hiring manager says: "We've reached our limit. Take it or leave it."`;
+                        outcomeClass = 'outcome-danger';
+                        outcomeText = '⚠️ Max Negotiations Reached';
+                    }
+                    break;
+                    
+                case 'reject':
+                    responseText = `You rejected the offer. The hiring manager says: "We're disappointed but understand. We'll keep your resume on file for future opportunities."`;
+                    outcomeClass = 'outcome-danger';
+                    outcomeText = '❌ Offer Rejected';
+                    break;
+            }
+            
+            // Show response
+            document.getElementById('response-text').textContent = responseText;
+            document.getElementById('response-outcome').textContent = outcomeText;
+            document.getElementById('response-outcome').className = `response-outcome ${outcomeClass}`;
+            document.getElementById('response-display').style.display = 'block';
+            
+            // Update offer display
+            updateOfferDisplay();
+        }
+
+        // Add event listeners for dynamic updates
+        document.getElementById('experience-years').addEventListener('input', function() {
+            if (currentScenario) {
+                const years = parseInt(this.value);
+                const scenario = scenarios[currentScenario];
+                
+                // Adjust offer based on experience
+                let multiplier = 1;
+                if (years > 5) multiplier = 1.2;
+                if (years > 10) multiplier = 1.4;
+                
+                currentOffer = Math.floor(scenario.baseSalary * multiplier);
+                updateOfferDisplay();
+            }
+        });
+
+        document.getElementById('clearance-level').addEventListener('change', function() {
+            if (currentScenario) {
+                const clearance = this.value;
+                const scenario = scenarios[currentScenario];
+                
+                // Adjust offer based on clearance
+                let multiplier = 1;
+                if (clearance === 'secret') multiplier = 1.1;
+                if (clearance === 'ts') multiplier = 1.2;
+                if (clearance === 'ts-sci') multiplier = 1.3;
+                
+                currentOffer = Math.floor(scenario.baseSalary * multiplier);
+                updateOfferDisplay();
+            }
+        });
+
+        document.getElementById('location').addEventListener('change', function() {
+            if (currentScenario) {
+                const location = this.value;
+                const scenario = scenarios[currentScenario];
+                
+                // Adjust offer based on location
+                let multiplier = 1;
+                if (location === 'dc') multiplier = 1.15;
+                if (location === 'ca') multiplier = 1.1;
+                if (location === 'co') multiplier = 1.05;
+                
+                currentOffer = Math.floor(scenario.baseSalary * multiplier);
+                updateOfferDisplay();
+            }
+        });
+
+        document.getElementById('skills').addEventListener('change', function() {
+            if (currentScenario) {
+                const skills = this.value;
+                const scenario = scenarios[currentScenario];
+                
+                // Adjust offer based on skills
+                let multiplier = 1;
+                if (skills === 'cyber') multiplier = 1.15;
+                if (skills === 'ai') multiplier = 1.2;
+                if (skills === 'space') multiplier = 1.1;
+                if (skills === 'sigint') multiplier = 1.25;
+                
+                currentOffer = Math.floor(scenario.baseSalary * multiplier);
+                updateOfferDisplay();
+            }
+        });
+    </script>
+</body>
+</html>

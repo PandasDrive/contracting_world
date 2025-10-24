@@ -371,6 +371,7 @@ main {
     display: flex;
     gap: 30px;
     align-items: flex-start;
+    overflow: visible;
 }
 
 .guide-container {
@@ -381,6 +382,7 @@ main {
     border: 1px solid rgba(77, 219, 255, 0.2);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     flex: 2;
+    overflow: visible;
 }
 
 .guide-container h2 {
@@ -390,12 +392,12 @@ main {
     font-size: 1.8em;
 }
 
-.guide-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted for 8 cards */
+            gap: 20px;
+            margin-top: 20px;
+        }
 
 .guide-card {
     background-color: rgba(26, 26, 26, 0.6);
@@ -404,7 +406,7 @@ main {
     border: 1px solid rgba(77, 219, 255, 0.1);
     transition: all 0.3s ease;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .guide-card::before {
@@ -475,12 +477,18 @@ main {
     font-size: 12px;
     font-weight: bold;
     white-space: nowrap;
-    z-index: 1000;
+    z-index: 10000;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
     pointer-events: none;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+    min-width: 200px;
+    text-align: center;
 }
 
 .tooltip-trigger:hover .tooltip {
