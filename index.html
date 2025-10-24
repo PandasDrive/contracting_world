@@ -7,10 +7,65 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <body>
-    <div class="aurora-background"></div>
-
-    </body>
+    <!-- Enhanced Splash Screen -->
+    <div id="splash-screen">
+        <div class="splash-background">
+            <div class="scan-lines"></div>
+            <div class="data-streams"></div>
+        </div>
+        
+        <!-- Central Hub -->
+        <div class="central-hub">
+            <div class="hub-core"></div>
+            <div class="hub-ring"></div>
+        </div>
+        
+        <!-- Fan-out Lines -->
+        <div class="fan-lines">
+            <div class="fan-line" data-angle="0"></div>
+            <div class="fan-line" data-angle="30"></div>
+            <div class="fan-line" data-angle="60"></div>
+            <div class="fan-line" data-angle="90"></div>
+            <div class="fan-line" data-angle="120"></div>
+            <div class="fan-line" data-angle="150"></div>
+            <div class="fan-line" data-angle="180"></div>
+            <div class="fan-line" data-angle="210"></div>
+            <div class="fan-line" data-angle="240"></div>
+            <div class="fan-line" data-angle="270"></div>
+            <div class="fan-line" data-angle="300"></div>
+            <div class="fan-line" data-angle="330"></div>
+        </div>
+        
+        <!-- Floating Data Nodes -->
+        <div class="data-nodes">
+            <div class="data-node" data-delay="0">NSA</div>
+            <div class="data-node" data-delay="200">NGA</div>
+            <div class="data-node" data-delay="400">NRO</div>
+            <div class="data-node" data-delay="600">CIA</div>
+            <div class="data-node" data-delay="800">DIA</div>
+            <div class="data-node" data-delay="1000">Lockheed</div>
+            <div class="data-node" data-delay="1200">Northrop</div>
+            <div class="data-node" data-delay="1400">Raytheon</div>
+        </div>
+        
+        <!-- Main Title -->
+        <div class="splash-title">
+            <h1>Contracting Ecosystem Explorer</h1>
+            <div class="title-subtitle">Initializing Intelligence Network...</div>
+        </div>
+        
+        <!-- Loading Progress -->
+        <div class="loading-progress">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="loading-text">Connecting to classified networks...</div>
+        </div>
+    </div>
+    
+    <!-- Main Content (hidden initially) -->
+    <div id="main-content">
+        <div class="aurora-background"></div>
 
     <header>
         <h1>The Contracting Ecosystem Explorer</h1>
@@ -178,8 +233,9 @@
     </section>
 </main>
 
+    </div>
+
     <script src="js/data.js?v=20241220"></script>
     <script src="js/app.js?v=20241220"></script>
-
 </body>
 </html>

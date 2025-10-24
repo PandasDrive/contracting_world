@@ -1,5 +1,71 @@
 console.log('🚀 Contracting World App.js loaded successfully!');
 
+// === ENHANCED SPLASH SCREEN LOGIC ===
+document.addEventListener('DOMContentLoaded', () => {
+    const splashScreen = document.getElementById('splash-screen');
+    const mainContent = document.getElementById('main-content');
+    
+    // Enhanced splash screen sequence
+    setTimeout(() => {
+        if (splashScreen) {
+            splashScreen.classList.add('hidden');
+        }
+        if (mainContent) {
+            mainContent.style.opacity = '1';
+            mainContent.classList.add('visible');
+        }
+        
+        // Remove splash screen from DOM after transition
+        setTimeout(() => {
+            if (splashScreen && splashScreen.parentNode) {
+                splashScreen.parentNode.removeChild(splashScreen);
+            }
+        }, 2000);
+        
+    }, 5000); // Show splash for 5 seconds to see all animations
+    
+    // Initialize main content
+    initializeMainContent();
+});
+
+function initializeMainContent() {
+    // Get the carousel containers
+    const row1 = document.getElementById('row-1');
+    const row2 = document.getElementById('row-2');
+    const row3 = document.getElementById('row-3');
+
+    // Check if elements exist and companyData is available
+    if (row1 && row2 && row3 && typeof companyData !== 'undefined') {
+        buildRow(companyData.ring1.companies, row1);
+        buildRow(companyData.ring2.companies, row2);
+        buildRow(companyData.ring3.companies, row3);
+
+        duplicateLogos(row1);
+        duplicateLogos(row2);
+        duplicateLogos(row3);
+    } else {
+        console.log('Logo carousels not found or companyData missing on this page.');
+    }
+
+    // Initialize features
+    initCareerQuiz();
+    initTooltips();
+    initSimulation();
+}
+
+// === SIMULATION LOGIC ===
+function initSimulation() {
+    const simulateButton = document.getElementById('simulate-button');
+    const simulationText = document.getElementById('simulation-text');
+    const simulationProgress = document.getElementById('simulation-progress');
+    
+    if (simulateButton && simulationText && simulationProgress) {
+        simulateButton.addEventListener('click', runSimulation);
+    }
+}
+
+let simulationRunning = false;
+
 // Career path recommendations (predefined combinations) - GLOBAL SCOPE
 const careerRecommendations = {
     'military-none-cyber': {
@@ -81,38 +147,6 @@ const careerRecommendations = {
         nextSteps: ['Target senior consultant positions', 'Consider management consulting', 'Look at strategic advisory roles']
     }
 };
-
-console.log('🔍 Testing careerRecommendations availability:', typeof careerRecommendations);
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Get the NEW carousel containers from the HTML
-    const row1 = document.getElementById('row-1');
-    const row2 = document.getElementById('row-2');
-    const row3 = document.getElementById('row-3');
-
-    // Call our function to build the rows - REMOVED radius parameter
-    buildRow(companyData.ring1.companies, row1);
-    buildRow(companyData.ring2.companies, row2);
-    buildRow(companyData.ring3.companies, row3);
-
-    // --- IMPORTANT: Duplicate logos for seamless scroll ---
-    duplicateLogos(row1);
-    duplicateLogos(row2);
-    duplicateLogos(row3);
-    // --- End of duplication ---
-
-});
-
-// === SIMULATION LOGIC === // <<<< KEEP THIS FIRST BLOCK
-
-// Get the button and text popup elements
-const simulateButton = document.getElementById('simulate-button');
-const simulationText = document.getElementById('simulation-text');
-const simulationProgress = document.getElementById('simulation-progress');
-let simulationRunning = false; // Flag to prevent multiple clicks
-
-// Add event listener to the button
-simulateButton.addEventListener('click', runSimulation);
 
 function runSimulation() {
     if (simulationRunning) return; // Don't run if already running
