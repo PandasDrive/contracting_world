@@ -5,7 +5,18 @@ const companyData = {
     ring1: {
         name: "Level 1: The Customers",
         companies: [
-            { name: "NSA", logo: "img/nsa.png", link: "https://www.nsa.gov/careers/", desc: "National Security Agency: The U.S. leader in signals intelligence (SIGINT) and cybersecurity.", size: "government", clearance: "ts-sci" },
+            { 
+                name: "NSA", 
+                logo: "img/nsa.png", 
+                link: "https://www.nsa.gov/careers/", 
+                desc: "National Security Agency: The U.S. leader in signals intelligence (SIGINT) and cybersecurity.", 
+                size: "government", 
+                clearance: "ts-sci",
+                clearancejobs: "https://www.clearancejobs.com/jobs/nsa",
+                salaryRange: "$80k-$180k",
+                locations: ["Fort Meade, MD", "San Antonio, TX", "Denver, CO"],
+                specialties: ["SIGINT", "Cybersecurity", "Cryptanalysis", "Data Science"]
+            },
             { name: "NGA", logo: "img/nga.png", link: "https://www.nga.mil/careers/", desc: "National Geospatial-Intelligence Agency: Provides geospatial intelligence (GEOINT) from satellite and aerial imagery.", size: "government", clearance: "ts-sci" },
             { name: "NRO", logo: "img/nro.png", link: "https://www.nro.gov/Careers/", desc: "National Reconnaissance Office: Builds and operates America's spy satellites.", size: "government", clearance: "ts-sci" },
             { name: "DIA", logo: "img/dia.png", link: "https://www.dia.mil/Careers/", desc: "Defense Intelligence Agency: Provides military intelligence to defense policymakers and warfighters.", size: "government", clearance: "ts-sci" },
@@ -15,7 +26,19 @@ const companyData = {
     ring2: {
         name: "Level 2: The Primes",
         companies: [
-            { name: "Lockheed Martin", logo: "img/lockheed_martin.png", link: "https://www.lockheedmartinjobs.com/", desc: "A 'Big 5' Prime. Manages massive aerospace, defense, and intelligence contracts.", size: "large", clearance: "ts" },
+            { 
+                name: "Lockheed Martin", 
+                logo: "img/lockheed_martin.png", 
+                link: "https://www.lockheedmartinjobs.com/", 
+                desc: "A 'Big 5' Prime. Manages massive aerospace, defense, and intelligence contracts.", 
+                size: "large", 
+                clearance: "ts",
+                clearancejobs: "https://www.clearancejobs.com/jobs/lockheed-martin",
+                salaryRange: "$70k-$200k",
+                locations: ["Bethesda, MD", "Fort Worth, TX", "Denver, CO", "Sunnyvale, CA"],
+                specialties: ["Aerospace", "Missile Defense", "Space Systems", "Cybersecurity"],
+                contracts: ["F-35", "THAAD", "Space Fence", "Cyber Solutions"]
+            },
             { name: "Northrop Grumman", logo: "img/northrop_grumman.png", link: "https://www.ngc.com/careers/", desc: "A 'Big 5' Prime. Leader in space systems, cyber, and advanced aircraft.", size: "large", clearance: "ts" },
             { name: "Leidos", logo: "img/leidos.png", link: "https://careers.leidos.com/", desc: "A major Prime contractor managing large-scale IT, health, and intelligence contracts.", size: "large", clearance: "ts" },
             { name: "General Dynamics (GDIT)", logo: "img/gdit.png", link: "https://www.gdit.com/careers/", desc: "A 'Big 5' Prime. Major focus on IT services, cyber, and military systems.", size: "large", clearance: "ts" },

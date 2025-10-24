@@ -170,7 +170,15 @@ function buildRow(companies, rowElement) {
         link.target = "_blank";
         img.src = company.logo;
         img.alt = company.name;
-        figcaption.textContent = company.desc;
+        // Enhanced description with additional info
+        let enhancedDesc = company.desc;
+        if (company.salaryRange) {
+            enhancedDesc += ` Salary: ${company.salaryRange}`;
+        }
+        if (company.clearancejobs) {
+            enhancedDesc += ` | <a href="${company.clearancejobs}" target="_blank" style="color: #4ddbff;">View Jobs on ClearanceJobs</a>`;
+        }
+        figcaption.innerHTML = enhancedDesc;
 
         // Add company indicators if metadata exists
         if (company.size || company.clearance) {
@@ -178,25 +186,44 @@ function buildRow(companies, rowElement) {
             indicator.className = 'company-indicator';
             
             let indicatorText = '';
+            let tooltipText = '';
+            
             if (company.size) {
                 const sizeLabels = {
-                    'government': '🏛️',
-                    'large': '🏢',
-                    'medium': '🏬',
-                    'small': '🏪'
+                    'government': '🏛️ GOV',
+                    'large': '🏢 BIG5',
+                    'medium': '🏬 MID',
+                    'small': '🏪 SMB'
+                };
+                const sizeTooltips = {
+                    'government': 'Government Agency',
+                    'large': 'Big 5 Prime Contractor',
+                    'medium': 'Mid-Tier Prime Contractor',
+                    'small': 'Small Business Specialist'
                 };
                 indicatorText += sizeLabels[company.size] || '';
+                tooltipText += sizeTooltips[company.size] || '';
             }
+            
             if (company.clearance) {
                 const clearanceLabels = {
-                    'secret': '🟢',
-                    'ts': '🟡',
-                    'ts-sci': '🔴'
+                    'secret': '🟢 S',
+                    'ts': '🟡 TS',
+                    'ts-sci': '🔴 TS/SCI'
                 };
+                const clearanceTooltips = {
+                    'secret': 'Secret Clearance Required',
+                    'ts': 'Top Secret Clearance Required',
+                    'ts-sci': 'TS/SCI Clearance Required'
+                };
+                if (indicatorText) indicatorText += ' ';
                 indicatorText += clearanceLabels[company.clearance] || '';
+                if (tooltipText) tooltipText += ' • ';
+                tooltipText += clearanceTooltips[company.clearance] || '';
             }
             
             indicator.textContent = indicatorText;
+            indicator.title = tooltipText; // Add tooltip
             figure.appendChild(indicator);
         }
 

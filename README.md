@@ -2,7 +2,7 @@
 
 **Status: ✅ COMPLETE - Production Ready**
 
-A comprehensive, interactive guide to understanding the complex world of cleared government contracting. This project transforms the confusing landscape of government contracting into an accessible, visually stunning educational experience.
+A comprehensive, interactive guide to understanding the complex world of cleared government contracting. This project transforms the confusing landscape of government contracting into an accessible, visually stunning educational experience with direct job search integration.
 
 ## 🎯 Core Concept: The "Three-Level Model of Volatility"
 
@@ -15,18 +15,28 @@ This project explains the "three-level" contracting model (Customer → Prime �
 - **Comprehensive Terminology Guide**: Searchable dictionary with 20+ key contracting terms
 - **Security Clearance Guide**: Complete explanation of clearance levels, timelines, and sponsorship
 - **Resume Strategy Page**: Strategic guidance on how to apply without creating confusion
+- **Job Search Guide**: Complete career resource with salary data, locations, and networking strategies
+- **Company Profiles**: Detailed company information with culture, benefits, and application tips
 
 ### 🎨 **Visual Excellence**
 - **Aurora Background**: Stunning animated gradient background with flowing colors
 - **Company Indicators**: Visual badges showing company size and clearance requirements
 - **Interactive Tooltips**: Hover explanations for key terminology throughout the site
 - **Glass Morphism Design**: Modern, translucent containers with backdrop blur effects
+- **Enhanced Simulation**: 8-phase contract lifecycle with progress tracking
 
 ### 📊 **Educational Simulation**
 - **8-Phase Contract Lifecycle**: Complete simulation from initial award to job hopping
 - **Progress Tracking**: Visual progress bar showing current simulation phase
 - **Company Highlighting**: Dynamic highlighting of relevant companies during simulation
 - **Real-World Scenarios**: Based on actual contracting situations and terminology
+
+### 🔗 **ClearanceJobs.com Integration**
+- **Direct Job Links**: Every company has ClearanceJobs.com search integration
+- **Salary Research**: Links to compensation data and negotiation guidance
+- **Company Research**: Access to company reviews and employee insights
+- **Job Search Strategies**: Advanced search techniques and alert setup
+- **Career Resources**: Professional development and networking guidance
 
 ## 📁 Project Structure
 
@@ -39,12 +49,14 @@ contracting-explorer/
 ├── resume_strategy.html         # Resume submission guidance
 ├── contracting_dictionary.html  # Searchable terminology database
 ├── clearance_guide.html         # Security clearance information
+├── job_search_guide.html        # Comprehensive job search resources
+├── company_profiles.html        # Detailed company information
 │
 ├── css/
 │   └── style.css               # Complete styling with Aurora background
 │
 ├── js/
-│   ├── data.js                 # Company data with metadata
+│   ├── data.js                 # Enhanced company data with metadata
 │   └── app.js                  # Interactive features and simulation
 │
 └── img/                        # Company logos and assets
@@ -64,11 +76,15 @@ contracting-explorer/
 - How to strategically apply for jobs
 - What security clearances they need
 - How to navigate career paths
+- Where to find actual job opportunities
+- What salaries to expect
+- Which companies match their background
 
 **Secondary**: Experienced contractors who want to:
 - Explain the industry to newcomers
 - Visualize the contract lifecycle
 - Understand company hierarchies
+- Research career advancement opportunities
 
 ## 🌟 Key Educational Components
 
@@ -81,6 +97,8 @@ contracting-explorer/
 - **Size Indicators**: 🏛️ Government, 🏢 Large Prime, 🏬 Medium Prime, 🏪 Small Business
 - **Clearance Requirements**: 🟢 Secret, 🟡 Top Secret, 🔴 TS/SCI
 - **Company Descriptions**: Detailed explanations of each company's focus
+- **Salary Ranges**: Actual compensation data by company type
+- **ClearanceJobs Links**: Direct job search integration
 
 ### 3. **Contract Lifecycle Simulation**
 1. **Contract Award**: Initial RFP and award process
@@ -92,6 +110,14 @@ contracting-explorer/
 7. **Job Hop**: Employees move to keep their work
 8. **New Team Formation**: Cycle continues with new company
 
+### 4. **Career Resources**
+- **Job Search Strategies**: Where to look and how to apply
+- **Salary Data**: Compensation ranges by company type and location
+- **Geographic Hubs**: Major contracting locations with job counts
+- **Networking Guide**: LinkedIn strategies and industry events
+- **Professional Development**: Certifications and career advancement
+- **Company Profiles**: Culture, benefits, hiring processes, application tips
+
 ## 🛠️ Technical Implementation
 
 ### **Frontend Technologies**
@@ -101,10 +127,12 @@ contracting-explorer/
 - **Aurora Background**: Pure CSS animated gradients
 
 ### **Key JavaScript Features**
-- **Dynamic Company Loading**: Companies loaded from data.js with metadata
+- **Dynamic Company Loading**: Companies loaded from data.js with enhanced metadata
 - **Interactive Career Quiz**: Multi-step questionnaire with personalized results
 - **Tooltip System**: Hover explanations for terminology
 - **Simulation Engine**: 8-phase contract lifecycle with progress tracking
+- **Company Search**: Filterable company profiles with detailed information
+- **ClearanceJobs Integration**: Direct job search links and strategies
 - **Responsive Design**: Mobile-friendly layouts and interactions
 
 ### **Performance Optimizations**
@@ -126,6 +154,7 @@ contracting-explorer/
 - **Interactive Learning**: Hands-on exploration of concepts
 - **Visual Hierarchy**: Clear information architecture
 - **Accessibility**: Screen reader friendly and keyboard navigable
+- **Actionable Content**: Direct paths to job opportunities and resources
 
 ## 📈 Educational Impact
 
@@ -135,6 +164,9 @@ contracting-explorer/
 - **Career Path Clarity**: Personalized guidance based on individual background
 - **Clearance Understanding**: Complete process explanation with timelines
 - **Industry Visualization**: Makes abstract concepts concrete and visual
+- **Job Search Confusion**: Clear guidance on where and how to find opportunities
+- **Salary Uncertainty**: Actual compensation data by company and location
+- **Company Research**: Detailed profiles with culture and application insights
 
 ### **Learning Outcomes**
 After using this tool, newcomers will understand:
@@ -144,22 +176,41 @@ After using this tool, newcomers will understand:
 - How to strategically approach job applications
 - What security clearances they need and how to get them
 - Which companies match their background and interests
+- Where to find actual job opportunities
+- What salaries to expect at different companies
+- How to advance their contracting careers
+- Which geographic locations offer the best opportunities
+
+## 🔗 ClearanceJobs.com Integration
+
+### **Direct Job Search**
+- **Company-Specific Links**: Direct ClearanceJobs search for each company
+- **Advanced Search Strategies**: Filter by clearance level, company size, location
+- **Job Alerts**: Instructions for setting up targeted notifications
+- **Salary Research**: Links to compensation data and negotiation guidance
+
+### **Career Resources**
+- **Company Reviews**: Access to employee testimonials and culture insights
+- **Interview Preparation**: Common contracting interview questions and tips
+- **Professional Development**: Certification guidance and career advancement
+- **Networking Opportunities**: Industry events and professional groups
 
 ## 🚀 Future Enhancements
 
 ### **Potential Additions**
-- **Salary Information**: Compensation ranges by company and role
-- **Geographic Data**: Location-based contracting opportunities
+- **Real-Time Job Data**: Live job postings integration
+- **User Accounts**: Personalized career tracking and job alerts
+- **Interview Simulator**: Practice contracting-specific interview questions
+- **Salary Calculator**: Location and skill-based compensation estimates
 - **Contract Database**: Real contract information and timelines
-- **Networking Features**: Connect with current contractors
-- **Certification Guide**: Required certifications by role
-- **Interview Preparation**: Common contracting interview questions
+- **Mentorship Matching**: Connect newcomers with experienced contractors
 
 ### **Technical Improvements**
 - **Progressive Web App**: Offline functionality and mobile app features
 - **Database Integration**: Dynamic company and contract data
-- **User Accounts**: Personalized career tracking
 - **Analytics**: Usage tracking for educational insights
+- **API Integration**: Real-time job posting data
+- **Social Features**: Community discussions and Q&A
 
 ## 🎯 Success Metrics
 
@@ -169,6 +220,10 @@ After using this tool, newcomers will understand:
 - ✅ Strategic resume guidance
 - ✅ Complete clearance process explanation
 - ✅ Interactive career path recommendations
+- ✅ Direct job search integration
+- ✅ Salary and compensation data
+- ✅ Geographic opportunity mapping
+- ✅ Company culture and application insights
 
 ### **Technical Goals**
 - ✅ Responsive design for all devices
@@ -176,6 +231,8 @@ After using this tool, newcomers will understand:
 - ✅ Fast loading and performance
 - ✅ Accessible design principles
 - ✅ Clean, maintainable code
+- ✅ ClearanceJobs.com integration
+- ✅ Enhanced user experience
 
 ## 📝 Usage Instructions
 
@@ -185,15 +242,19 @@ After using this tool, newcomers will understand:
 4. **Run the Contract Simulation** to see the full lifecycle
 5. **Visit specialized pages** for detailed information on specific topics
 6. **Use the Dictionary** to look up unfamiliar terms
+7. **Check Job Search Guide** for career opportunities and strategies
+8. **Browse Company Profiles** for detailed company information
+9. **Click ClearanceJobs links** to find actual job opportunities
 
 ## 🤝 Contributing
 
 This project is designed to be educational and community-focused. Contributions are welcome for:
-- Additional company information
+- Additional company information and profiles
 - New terminology definitions
 - Career path recommendations
 - Visual improvements
 - Accessibility enhancements
+- Job search strategies and resources
 
 ## 📄 License
 
@@ -203,4 +264,4 @@ This project is created for educational purposes to help newcomers understand go
 
 **Built with ❤️ for the contracting community**
 
-*Making the complex world of government contracting accessible to everyone.*
+*Making the complex world of government contracting accessible to everyone - from education to employment.*
