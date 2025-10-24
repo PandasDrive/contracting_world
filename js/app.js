@@ -1,4 +1,5 @@
 console.log('🚀 Contracting World App.js loaded successfully!');
+console.log('🔍 Testing careerRecommendations availability:', typeof careerRecommendations);
 
 document.addEventListener('DOMContentLoaded', () => {
     // Get the NEW carousel containers from the HTML
