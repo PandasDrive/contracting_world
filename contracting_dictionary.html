@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contracting Dictionary - Key Terms Explained</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="aurora-background"></div>
+    
+    <header>
+        <h1>📚 Contracting Dictionary</h1>
+        <p>Confused by contracting terminology? We've got you covered with clear explanations.</p>
+    </header>
+
+    <main class="explainer-content">
+        <div class="dictionary-search">
+            <input type="text" id="term-search" placeholder="Search for a term..." />
+        </div>
+
+        <div class="dictionary-categories">
+            <button class="category-btn active" data-category="all">All Terms</button>
+            <button class="category-btn" data-category="contracts">Contracts</button>
+            <button class="category-btn" data-category="companies">Companies</button>
+            <button class="category-btn" data-category="clearance">Clearance</button>
+            <button class="category-btn" data-category="process">Process</button>
+        </div>
+
+        <div class="terms-grid" id="terms-container">
+            <!-- Terms will be populated by JavaScript -->
+        </div>
+
+        <div class="explainer-link">
+            <a href="index.html">&larr; Return to the Ecosystem Explorer</a>
+        </div>
+    </main>
+
+    <script>
+        // Contracting terms dictionary
+        const contractingTerms = {
+            'prime-contractor': {
+                term: 'Prime Contractor',
+                category: 'companies',
+                definition: 'A large company that directly contracts with government agencies. They are responsible for managing the entire contract and hiring subcontractors.',
+                example: 'Lockheed Martin is a Prime Contractor for many Department of Defense contracts.',
+                related: ['Subcontractor', 'Contract Award', 'Task Order']
+            },
+            'subcontractor': {
+                term: 'Subcontractor',
+                category: 'companies',
+                definition: 'A smaller company hired by Prime Contractors to perform specific work on a contract. They work under the Prime\'s management.',
+                example: 'Visionist is often a Subcontractor to larger Primes like Lockheed Martin.',
+                related: ['Prime Contractor', 'Team Member', 'Specialist']
+            },
+            'task-order': {
+                term: 'Task Order',
+                category: 'contracts',
+                definition: 'A specific work assignment under a larger contract. It defines exactly what work needs to be done, when, and for how much.',
+                example: 'The "MIDAS STUDIES" Task Order might involve analyzing satellite data for the NRO.',
+                related: ['Contract', 'Work Assignment', 'Statement of Work']
+            },
+            're-compete': {
+                term: 'Re-compete',
+                category: 'process',
+                definition: 'When a contract expires and goes up for bid again. The current contractor must compete against other companies to keep the work.',
+                example: 'Every 5 years, the MIDAS contract goes up for Re-compete, causing companies to compete for the work.',
+                related: ['Contract Award', 'Job Hop', 'Contingent Offer']
+            },
+            'contingent-offer': {
+                term: 'Contingent Offer',
+                category: 'process',
+                definition: 'A job offer that depends on a future event happening, usually winning a contract. If the event doesn\'t happen, the offer is void.',
+                example: 'Northrop Grumman might give you a Contingent Offer: "You have the job IF we win the MIDAS contract."',
+                related: ['Re-compete', 'Job Hop', 'Contract Award']
+            },
+            'job-hop': {
+                term: 'Job Hop',
+                category: 'process',
+                definition: 'When an employee moves from one company to another while doing the same job, usually due to contract re-competes.',
+                example: 'When Northrop wins MIDAS from Lockheed, Visionist employees might Job Hop to keep working on the same project.',
+                related: ['Re-compete', 'Contingent Offer', 'Contract Award']
+            },
+            'security-clearance': {
+                term: 'Security Clearance',
+                category: 'clearance',
+                definition: 'Government background check that allows access to classified information. Required for most contracting jobs.',
+                example: 'You need at least Secret Security Clearance to work on most government contracts.',
+                related: ['Secret', 'Top Secret', 'TS/SCI', 'Background Investigation']
+            },
+            'secret': {
+                term: 'Secret',
+                category: 'clearance',
+                definition: 'The most common level of security clearance. Allows access to information that could cause serious damage to national security.',
+                example: 'Most entry-level contracting positions require Secret clearance.',
+                related: ['Security Clearance', 'Top Secret', 'TS/SCI']
+            },
+            'top-secret': {
+                term: 'Top Secret',
+                category: 'clearance',
+                definition: 'Higher level of security clearance. Allows access to information that could cause exceptionally grave damage to national security.',
+                example: 'Intelligence analysis positions often require Top Secret clearance.',
+                related: ['Security Clearance', 'Secret', 'TS/SCI']
+            },
+            'ts-sci': {
+                term: 'TS/SCI',
+                category: 'clearance',
+                definition: 'Top Secret/Sensitive Compartmented Information. The highest level of clearance, required for the most sensitive intelligence work.',
+                example: 'NSA and CIA contractors typically need TS/SCI clearance.',
+                related: ['Top Secret', 'Security Clearance', 'Compartmented Information']
+            },
+            'clearance-sponsorship': {
+                term: 'Clearance Sponsorship',
+                category: 'clearance',
+                definition: 'When a company pays for and manages your security clearance application process. Required for getting your first clearance.',
+                example: 'If you don\'t have clearance, you need a company to provide Clearance Sponsorship.',
+                related: ['Security Clearance', 'Background Investigation', 'Sponsor']
+            },
+            'big-5': {
+                term: 'Big 5',
+                category: 'companies',
+                definition: 'The five largest defense contractors: Lockheed Martin, Northrop Grumman, Raytheon (RTX), General Dynamics, and Boeing.',
+                example: 'The Big 5 companies manage the largest government contracts.',
+                related: ['Prime Contractor', 'Defense Contractor', 'Major Prime']
+            },
+            'small-business': {
+                term: 'Small Business',
+                category: 'companies',
+                definition: 'Companies that meet government size standards. Often get "set-aside" contracts reserved specifically for small businesses.',
+                example: 'Many contracts are set aside specifically for Small Business participation.',
+                related: ['Set-Aside', 'Small Business Prime', '8(a)']
+            },
+            'set-aside': {
+                term: 'Set-Aside',
+                category: 'contracts',
+                definition: 'Contracts reserved specifically for certain types of companies (small business, veteran-owned, etc.).',
+                example: 'The government might Set-Aside 20% of a contract specifically for Small Business participation.',
+                related: ['Small Business', 'Veteran-Owned', 'Contract Award']
+            },
+            'proposal': {
+                term: 'Proposal',
+                category: 'process',
+                definition: 'A company\'s formal response to a government contract solicitation, explaining how they will do the work.',
+                example: 'Companies spend months writing Proposals to win government contracts.',
+                related: ['Solicitation', 'Contract Award', 'Bid']
+            },
+            'solicitation': {
+                term: 'Solicitation',
+                category: 'contracts',
+                definition: 'The government\'s formal request for companies to bid on a contract. Contains all requirements and evaluation criteria.',
+                example: 'The government releases a Solicitation asking companies to propose how they would do the work.',
+                related: ['Proposal', 'RFP', 'Contract Award']
+            },
+            'rfp': {
+                term: 'RFP',
+                category: 'contracts',
+                definition: 'Request for Proposal. A type of solicitation where the government asks companies to propose solutions.',
+                example: 'The NRO released an RFP for the next generation of satellite systems.',
+                related: ['Solicitation', 'Proposal', 'Contract Award']
+            },
+            'incumbent': {
+                term: 'Incumbent',
+                category: 'process',
+                definition: 'The company currently performing work on a contract. Has advantage in re-compete but must still compete.',
+                example: 'Lockheed Martin is the Incumbent on the MIDAS contract, but must still compete to keep it.',
+                related: ['Re-compete', 'Contract Award', 'Competition']
+            },
+            'team-member': {
+                term: 'Team Member',
+                category: 'companies',
+                definition: 'A subcontractor that is part of a Prime\'s proposal team for a contract.',
+                example: 'Visionist is a Team Member on Lockheed\'s proposal for the MIDAS re-compete.',
+                related: ['Subcontractor', 'Proposal', 'Prime Contractor']
+            },
+            'capture': {
+                term: 'Capture',
+                category: 'process',
+                definition: 'The process of identifying, pursuing, and winning new contracts. Companies have dedicated "capture teams."',
+                example: 'Northrop\'s Capture team is working on winning the MIDAS contract from Lockheed.',
+                related: ['Proposal', 'Business Development', 'Contract Award']
+            }
+        };
+
+        // Initialize dictionary
+        function initDictionary() {
+            const searchInput = document.getElementById('term-search');
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const termsContainer = document.getElementById('terms-container');
+
+            // Populate terms
+            displayTerms('all');
+
+            // Search functionality
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                filterTerms(searchTerm);
+            });
+
+            // Category filtering
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    displayTerms(btn.dataset.category);
+                });
+            });
+        }
+
+        function displayTerms(category) {
+            const termsContainer = document.getElementById('terms-container');
+            let filteredTerms = Object.values(contractingTerms);
+
+            if (category !== 'all') {
+                filteredTerms = filteredTerms.filter(term => term.category === category);
+            }
+
+            termsContainer.innerHTML = filteredTerms.map(term => `
+                <div class="term-card" data-category="${term.category}">
+                    <h3>${term.term}</h3>
+                    <p class="term-definition">${term.definition}</p>
+                    <div class="term-example">
+                        <strong>Example:</strong> ${term.example}
+                    </div>
+                    <div class="term-related">
+                        <strong>Related:</strong> ${term.related.join(', ')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterTerms(searchTerm) {
+            const termCards = document.querySelectorAll('.term-card');
+            termCards.forEach(card => {
+                const termText = card.textContent.toLowerCase();
+                if (termText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initDictionary);
+    </script>
+
+    <style>
+        .dictionary-search {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .dictionary-search input {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border: 2px solid rgba(77, 219, 255, 0.3);
+            border-radius: 8px;
+            background-color: rgba(26, 26, 26, 0.6);
+            color: #f0f0f0;
+            font-size: 16px;
+        }
+
+        .dictionary-search input:focus {
+            outline: none;
+            border-color: #4ddbff;
+        }
+
+        .dictionary-categories {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background-color: rgba(26, 26, 26, 0.6);
+            border: 2px solid rgba(77, 219, 255, 0.2);
+            color: #f0f0f0;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            border-color: #4ddbff;
+            background-color: rgba(77, 219, 255, 0.2);
+            color: #4ddbff;
+        }
+
+        .terms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .term-card {
+            background-color: rgba(26, 26, 26, 0.6);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(77, 219, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .term-card:hover {
+            border-color: rgba(77, 219, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(77, 219, 255, 0.1);
+        }
+
+        .term-card h3 {
+            color: #4ddbff;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .term-definition {
+            color: #f0f0f0;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .term-example,
+        .term-related {
+            color: #ccc;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .term-example strong,
+        .term-related strong {
+            color: #4ddbff;
+        }
+
+        @media (max-width: 768px) {
+            .terms-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dictionary-categories {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</body>
+</html>

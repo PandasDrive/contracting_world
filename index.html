@@ -20,6 +20,35 @@
         <p>A visual guide to the "Three-Level Model of Volatility"</p>
     </header>
 
+    <!-- Newcomer's Guide Section -->
+    <section class="newcomer-guide">
+        <div class="guide-container">
+            <h2>🆕 New to Government Contracting?</h2>
+            <div class="guide-grid">
+                <div class="guide-card">
+                    <h3>🎯 Where Do I Start?</h3>
+                    <p>Start by understanding the three levels: <span class="tooltip-trigger" data-tooltip="Government agencies that need work done (NSA, NGA, NRO, etc.)">Customers</span> → <span class="tooltip-trigger" data-tooltip="Large companies that directly contract with government">Primes</span> → <span class="tooltip-trigger" data-tooltip="Specialized companies hired by Primes">Specialists</span></p>
+                    <a href="#career-path-tool" class="guide-link">Find Your Path →</a>
+                </div>
+                <div class="guide-card">
+                    <h3>🔐 Security Clearance Guide</h3>
+                    <p>Most contracting jobs require <span class="tooltip-trigger" data-tooltip="Government background check allowing access to classified information">security clearance</span>. Learn what you need and how to get it.</p>
+                    <a href="clearance_guide.html" class="guide-link">Clearance Guide →</a>
+                </div>
+                <div class="guide-card">
+                    <h3>📄 Resume Strategy</h3>
+                    <p>Don't apply everywhere! Learn the strategic approach to avoid confusion and maximize your chances.</p>
+                    <a href="resume_strategy.html" class="guide-link">Resume Tips →</a>
+                </div>
+                <div class="guide-card">
+                    <h3>📚 Contracting Dictionary</h3>
+                    <p>Confused by terms like "Task Order" or "Re-compete"? We've got you covered.</p>
+                    <a href="contracting_dictionary.html" class="guide-link">Learn Terms →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <main>
     <div class="row-container">
         <h2>Level 1: The Customers</h2>
@@ -45,8 +74,57 @@
 
     <div class="simulation-controls">
         <button id="simulate-button">Simulate a Contract Re-Compete!</button>
+        <div id="simulation-progress" class="simulation-progress"></div>
         <div id="simulation-text" class="simulation-popup"></div>
     </div>
+
+    <!-- Career Path Tool -->
+    <section id="career-path-tool" class="career-path-section">
+        <div class="career-container">
+            <h2>🎯 Find Your Contracting Career Path</h2>
+            <p>Answer a few questions to get personalized guidance on your contracting journey.</p>
+            
+            <div class="career-quiz">
+                <div class="quiz-step active" id="step-1">
+                    <h3>What's your background?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-background="military">🪖 Military/Veteran</button>
+                        <button class="quiz-option" data-background="civilian">👔 Civilian Professional</button>
+                        <button class="quiz-option" data-background="recent-grad">🎓 Recent Graduate</button>
+                        <button class="quiz-option" data-background="career-change">🔄 Career Changer</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-step" id="step-2">
+                    <h3>What security clearance do you have?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-clearance="none">❌ None</button>
+                        <button class="quiz-option" data-clearance="secret">🟢 Secret</button>
+                        <button class="quiz-option" data-clearance="ts">🟡 Top Secret</button>
+                        <button class="quiz-option" data-clearance="ts-sci">🔴 TS/SCI</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-step" id="step-3">
+                    <h3>What interests you most?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-interest="cyber">🛡️ Cybersecurity</button>
+                        <button class="quiz-option" data-interest="intelligence">🕵️ Intelligence Analysis</button>
+                        <button class="quiz-option" data-interest="engineering">⚙️ Engineering</button>
+                        <button class="quiz-option" data-interest="it">💻 IT/Software</button>
+                        <button class="quiz-option" data-interest="space">🛰️ Space Systems</button>
+                        <button class="quiz-option" data-interest="data">📊 Data Science</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-results" id="results">
+                    <h3>Your Recommended Path</h3>
+                    <div id="career-recommendation"></div>
+                    <button id="restart-quiz" class="restart-btn">Take Quiz Again</button>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 
     <script src="js/data.js"></script>
