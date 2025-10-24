@@ -404,6 +404,88 @@ function generateNextSteps(background, clearance, interest) {
 
 let currentStep = 1;
 
+// Career path recommendations (predefined combinations)
+const careerRecommendations = {
+    'military-none-cyber': {
+        title: '🪖 Military to Cybersecurity Path',
+        path: 'Start with entry-level cybersecurity roles at mid-tier primes like CACI or SAIC. Focus on getting Secret clearance first.',
+        companies: ['CACI', 'SAIC', 'ManTech'],
+        nextSteps: ['Apply for Secret clearance sponsorship', 'Get CompTIA Security+ certification', 'Target SOC analyst roles']
+    },
+    'military-secret-intelligence': {
+        title: '🕵️ Military Intelligence Specialist',
+        path: 'Your Secret clearance opens doors at intelligence-focused companies. Consider NSA or NGA contractors.',
+        companies: ['NSA', 'NGA', 'Visionist', 'NASK'],
+        nextSteps: ['Apply for Top Secret upgrade', 'Consider intelligence analysis roles', 'Look at SIGINT positions']
+    },
+    'military-ts-space': {
+        title: '🚀 Military Space Systems Expert',
+        path: 'Your Top Secret clearance and military experience make you ideal for space and missile defense programs.',
+        companies: ['Northrop Grumman', 'Lockheed Martin', 'RTX'],
+        nextSteps: ['Target space systems contracts', 'Consider missile defense programs', 'Look at satellite operations roles']
+    },
+    'military-ts-sci-sigint': {
+        title: '📡 Elite SIGINT Specialist',
+        path: 'Your TS/SCI clearance and military background make you perfect for the most sensitive intelligence work.',
+        companies: ['NSA', 'Zeta Associates', 'Praxis Engineering'],
+        nextSteps: ['Apply for NSA contractor positions', 'Consider SIGINT analysis roles', 'Look at geolocation specialist positions']
+    },
+    'civilian-none-it': {
+        title: '💻 Civilian IT Professional',
+        path: 'Start with IT support roles at large primes. Your civilian experience is valuable for customer-facing positions.',
+        companies: ['Leidos', 'General Dynamics', 'Booz Allen'],
+        nextSteps: ['Get Secret clearance sponsorship', 'Consider IT modernization contracts', 'Build government contracting experience']
+    },
+    'civilian-secret-cloud': {
+        title: '☁️ Cloud Computing Specialist',
+        path: 'Your Secret clearance and civilian cloud experience are in high demand for government cloud migration projects.',
+        companies: ['Amazon Web Services', 'Microsoft Azure', 'Google Cloud'],
+        nextSteps: ['Get cloud certifications (AWS, Azure)', 'Target cloud migration contracts', 'Consider hybrid cloud roles']
+    },
+    'civilian-ts-ai': {
+        title: '🤖 AI/ML Data Scientist',
+        path: 'Your Top Secret clearance opens doors to cutting-edge AI projects in the intelligence community.',
+        companies: ['Booz Allen Hamilton', 'CACI', 'ManTech'],
+        nextSteps: ['Get AI/ML certifications', 'Build portfolio with classified projects', 'Consider data science roles at IC agencies']
+    },
+    'recent-grad-none-data': {
+        title: '📊 Recent Graduate Data Scientist',
+        path: 'Start with data analysis roles at mid-tier primes. Your fresh skills are valuable for modern data projects.',
+        companies: ['CACI', 'SAIC', 'ManTech'],
+        nextSteps: ['Get Secret clearance sponsorship', 'Build data science portfolio', 'Consider analytics roles']
+    },
+    'recent-grad-secret-engineering': {
+        title: '⚙️ Entry-Level Engineer',
+        path: 'Your Secret clearance and engineering degree make you attractive to defense contractors.',
+        companies: ['Lockheed Martin', 'Northrop Grumman', 'RTX'],
+        nextSteps: ['Apply for engineering rotational programs', 'Get relevant certifications', 'Consider systems engineering roles']
+    },
+    'recent-grad-ts-cyber': {
+        title: '🛡️ Cybersecurity Engineer',
+        path: 'Your Top Secret clearance and cybersecurity focus make you ideal for high-security roles.',
+        companies: ['NSA', 'NGA', 'Visionist'],
+        nextSteps: ['Get cybersecurity certifications', 'Apply for NSA contractor positions', 'Consider threat analysis roles']
+    },
+    'career-change-none-it': {
+        title: '🔄 Career Changer to IT',
+        path: 'Your previous experience brings valuable perspective to government IT projects.',
+        companies: ['Leidos', 'General Dynamics', 'Booz Allen'],
+        nextSteps: ['Get IT certifications', 'Apply for Secret clearance sponsorship', 'Leverage transferable skills']
+    },
+    'career-change-secret-management': {
+        title: '👔 Program Management Track',
+        path: 'Your Secret clearance and management experience make you ideal for program management roles.',
+        companies: ['Booz Allen Hamilton', 'CACI', 'SAIC'],
+        nextSteps: ['Get PMP certification', 'Consider program management roles', 'Look at contract management positions']
+    },
+    'career-change-ts-consulting': {
+        title: '💼 Senior Consultant',
+        path: 'Your Top Secret clearance and extensive experience make you valuable for senior consulting roles.',
+        companies: ['Booz Allen Hamilton', 'Deloitte', 'Accenture Federal'],
+        nextSteps: ['Target senior consultant positions', 'Consider management consulting', 'Look at strategic advisory roles']
+    }
+};
+
 // Initialize career quiz
 function initCareerQuiz() {
     console.log('🎯 Initializing career quiz...');
