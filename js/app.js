@@ -256,41 +256,143 @@ let quizData = {
     interest: null
 };
 
-let currentStep = 1;
-
-// Career path recommendations
-const careerRecommendations = {
-    'military-none-cyber': {
-        title: '🪖 Military to Cybersecurity Path',
-        path: 'Start with entry-level cybersecurity roles at mid-tier primes like CACI or SAIC. Focus on getting Secret clearance first.',
-        companies: ['CACI', 'SAIC', 'ManTech'],
-        nextSteps: ['Apply for Secret clearance sponsorship', 'Get CompTIA Security+ certification', 'Target SOC analyst roles']
-    },
-    'military-secret-intelligence': {
-        title: '🕵️ Military Intelligence Specialist',
-        path: 'Your Secret clearance opens doors at intelligence-focused companies. Consider NSA or NGA contractors.',
-        companies: ['NSA', 'NGA', 'Visionist', 'NASK'],
-        nextSteps: ['Apply for Top Secret upgrade', 'Consider intelligence analysis roles', 'Look at SIGINT positions']
-    },
-    'civilian-none-it': {
-        title: '💻 Civilian IT Professional',
-        path: 'Start with IT support roles at large primes. Your civilian experience is valuable for customer-facing positions.',
-        companies: ['Leidos', 'General Dynamics', 'Booz Allen'],
-        nextSteps: ['Get Secret clearance sponsorship', 'Consider IT modernization contracts', 'Build government contracting experience']
-    },
-    'recent-grad-none-data': {
-        title: '📊 Recent Graduate Data Scientist',
-        path: 'Your fresh skills are perfect for data analytics roles. Start with companies that value new talent.',
-        companies: ['Enlighten', 'MesaVita', 'Praxis Engineering'],
-        nextSteps: ['Get Secret clearance sponsorship', 'Focus on data science certifications', 'Apply to small business specialists']
-    },
-    'career-change-none-space': {
-        title: '🛰️ Career Changer to Space',
-        path: 'Space contracting is growing rapidly. Your diverse background is an asset for interdisciplinary roles.',
-        companies: ['Maxar', 'Capella Space', 'Umbra', 'BlackSky'],
-        nextSteps: ['Get Secret clearance sponsorship', 'Learn space systems basics', 'Consider commercial space companies']
+// Dynamic recommendation generator
+function generateDynamicRecommendation(background, clearance, interest) {
+    const baseRecommendation = careerRecommendations[`${background}-${clearance}-${interest}`];
+    
+    if (baseRecommendation) {
+        return baseRecommendation;
     }
-};
+    
+    // Generate dynamic recommendation based on combinations
+    const recommendations = {
+        title: generateTitle(background, clearance, interest),
+        path: generatePath(background, clearance, interest),
+        companies: generateCompanies(background, clearance, interest),
+        nextSteps: generateNextSteps(background, clearance, interest)
+    };
+    
+    return recommendations;
+}
+
+function generateTitle(background, clearance, interest) {
+    const titles = {
+        'military': {
+            'none': '🪖 Military Veteran Entry Path',
+            'secret': '🕵️ Cleared Military Professional',
+            'ts': '🚀 Senior Military Specialist',
+            'ts-sci': '📡 Elite Military Intelligence'
+        },
+        'civilian': {
+            'none': '💼 Civilian Professional Track',
+            'secret': '🔒 Cleared Civilian Expert',
+            'ts': '🎯 Senior Civilian Specialist',
+            'ts-sci': '🔐 Elite Civilian Intelligence'
+        },
+        'recent-grad': {
+            'none': '🎓 Recent Graduate Program',
+            'secret': '🆕 Cleared Graduate Track',
+            'ts': '⭐ Advanced Graduate Path',
+            'ts-sci': '🌟 Elite Graduate Program'
+        },
+        'career-change': {
+            'none': '🔄 Career Transition Track',
+            'secret': '🔑 Cleared Career Changer',
+            'ts': '🎯 Senior Career Transition',
+            'ts-sci': '🔐 Elite Career Transition'
+        }
+    };
+    
+    return titles[background]?.[clearance] || '🎯 Custom Career Path';
+}
+
+function generatePath(background, clearance, interest) {
+    const paths = {
+        'military': 'Your military experience provides excellent foundation for government contracting. ',
+        'civilian': 'Your civilian experience brings valuable perspective to government projects. ',
+        'recent-grad': 'Your fresh skills and education make you attractive to contractors. ',
+        'career-change': 'Your diverse experience provides unique value to government contractors. '
+    };
+    
+    const clearancePaths = {
+        'none': 'Start by getting Secret clearance sponsorship from a contractor. ',
+        'secret': 'Your Secret clearance opens many opportunities. ',
+        'ts': 'Your Top Secret clearance provides access to high-value contracts. ',
+        'ts-sci': 'Your TS/SCI clearance gives you access to the most sensitive work. '
+    };
+    
+    const interestPaths = {
+        'cyber': 'Focus on cybersecurity roles with growing demand.',
+        'intelligence': 'Target intelligence analysis and SIGINT positions.',
+        'engineering': 'Consider systems engineering and technical roles.',
+        'it': 'Look at IT modernization and cloud migration projects.',
+        'space': 'Target space systems and satellite operations.',
+        'data': 'Focus on data science and analytics positions.'
+    };
+    
+    return (paths[background] || '') + (clearancePaths[clearance] || '') + (interestPaths[interest] || '');
+}
+
+function generateCompanies(background, clearance, interest) {
+    const companyPools = {
+        'military': {
+            'none': ['CACI', 'SAIC', 'ManTech', 'Parsons'],
+            'secret': ['CACI', 'SAIC', 'ManTech', 'Peraton'],
+            'ts': ['Lockheed Martin', 'Northrop Grumman', 'RTX', 'Leidos'],
+            'ts-sci': ['NSA', 'NGA', 'Visionist', 'Zeta Associates']
+        },
+        'civilian': {
+            'none': ['Leidos', 'General Dynamics', 'Booz Allen'],
+            'secret': ['Booz Allen Hamilton', 'CACI', 'SAIC'],
+            'ts': ['Lockheed Martin', 'Northrop Grumman', 'RTX'],
+            'ts-sci': ['NSA', 'NGA', 'Praxis Engineering']
+        },
+        'recent-grad': {
+            'none': ['CACI', 'SAIC', 'ManTech'],
+            'secret': ['Lockheed Martin', 'Northrop Grumman', 'RTX'],
+            'ts': ['NSA', 'NGA', 'Visionist'],
+            'ts-sci': ['NSA', 'Zeta Associates', 'Praxis Engineering']
+        },
+        'career-change': {
+            'none': ['Leidos', 'General Dynamics', 'Booz Allen'],
+            'secret': ['Booz Allen Hamilton', 'CACI', 'SAIC'],
+            'ts': ['Lockheed Martin', 'Northrop Grumman', 'RTX'],
+            'ts-sci': ['NSA', 'NGA', 'Praxis Engineering']
+        }
+    };
+    
+    const companies = companyPools[background]?.[clearance] || ['CACI', 'SAIC', 'ManTech'];
+    return companies.slice(0, 3); // Return top 3
+}
+
+function generateNextSteps(background, clearance, interest) {
+    const steps = [];
+    
+    // Clearance-based steps
+    if (clearance === 'none') {
+        steps.push('Apply for Secret clearance sponsorship');
+    } else if (clearance === 'secret') {
+        steps.push('Consider upgrading to Top Secret clearance');
+    } else if (clearance === 'ts') {
+        steps.push('Consider TS/SCI upgrade for intelligence work');
+    }
+    
+    // Interest-based steps
+    const interestSteps = {
+        'cyber': ['Get cybersecurity certifications (Security+, CISSP)', 'Build cybersecurity portfolio', 'Target SOC analyst roles'],
+        'intelligence': ['Apply for intelligence analysis roles', 'Consider SIGINT positions', 'Look at threat analysis'],
+        'engineering': ['Get relevant engineering certifications', 'Consider systems engineering roles', 'Target technical positions'],
+        'it': ['Get IT certifications (CompTIA, Microsoft)', 'Consider cloud migration projects', 'Target IT modernization'],
+        'space': ['Target space systems contracts', 'Consider satellite operations', 'Look at missile defense programs'],
+        'data': ['Get data science certifications', 'Build analytics portfolio', 'Consider data engineering roles']
+    };
+    
+    steps.push(...(interestSteps[interest] || ['Build relevant skills', 'Get industry certifications', 'Target entry-level positions']));
+    
+    return steps.slice(0, 3); // Return top 3 steps
+}
+
+let currentStep = 1;
 
 // Initialize career quiz
 function initCareerQuiz() {
@@ -347,9 +449,8 @@ function showResults() {
     const resultsElement = document.getElementById('results');
     const recommendationElement = document.getElementById('career-recommendation');
     
-    // Generate recommendation key
-    const key = `${quizData.background}-${quizData.clearance}-${quizData.interest}`;
-    const recommendation = careerRecommendations[key] || getDefaultRecommendation();
+    // Use dynamic recommendation generator
+    const recommendation = generateDynamicRecommendation(quizData.background, quizData.clearance, quizData.interest);
     
     // Display results
     recommendationElement.innerHTML = `

@@ -248,6 +248,59 @@ After using this tool, newcomers will understand:
 
 ## 🤝 Contributing
 
+## 🔌 API Integration (Future Enhancement)
+
+Due to current government shutdown, API integration is planned for future implementation. The Live Contract Tracker currently operates in demo mode with realistic simulated data.
+
+### **Planned API Integrations:**
+
+#### **1. SAM.gov API**
+- **Purpose**: Federal contract opportunities and solicitations
+- **Data**: Contract postings, deadlines, requirements, agency information
+- **Status**: Planned for post-shutdown implementation
+- **Documentation**: [SAM.gov API Docs](https://open.gsa.gov/api/sam-api/)
+
+#### **2. FPDS API**
+- **Purpose**: Federal procurement data system for contract awards
+- **Data**: Contract awards, spending data, vendor information
+- **Status**: Planned for post-shutdown implementation
+- **Documentation**: [FPDS API Docs](https://www.fpds.gov/fpdsng_cms/index.php/en/apis)
+
+#### **3. ClearanceJobs API**
+- **Purpose**: Job market data and salary information
+- **Data**: Job postings, salary ranges, company hiring trends
+- **Status**: Planned for post-shutdown implementation
+- **Contact**: ClearanceJobs Business Development
+
+### **Current Demo Mode Features:**
+- ✅ Realistic contract data simulation
+- ✅ Live countdown timers
+- ✅ Dynamic market metrics
+- ✅ Auto-refresh functionality
+- ✅ Multi-source data integration
+- ✅ Error handling and fallbacks
+
+### **Future API Implementation:**
+```javascript
+// Configuration for real API integration
+const API_CONFIG = {
+    sam: {
+        baseUrl: 'https://api.sam.gov/prod/opportunities/v2/search',
+        apiKey: process.env.SAM_API_KEY
+    },
+    fpds: {
+        baseUrl: 'https://api.fpds.gov/v1/awards',
+        apiKey: process.env.FPDS_API_KEY
+    },
+    clearancejobs: {
+        baseUrl: 'https://api.clearancejobs.com/v1',
+        apiKey: process.env.CLEARANCEJOBS_API_KEY
+    }
+};
+```
+
+---
+
 This project is designed to be educational and community-focused. Contributions are welcome for:
 - Additional company information and profiles
 - New terminology definitions
