@@ -345,6 +345,17 @@ const careerRecommendations = {
 function generateDynamicRecommendation(background, clearance, interest) {
     console.log('Generating recommendation for:', { background, clearance, interest });
     
+    // Check if careerRecommendations is available
+    if (typeof careerRecommendations === 'undefined') {
+        console.log('careerRecommendations not available, using dynamic generation only');
+        return {
+            title: generateTitle(background, clearance, interest),
+            path: generatePath(background, clearance, interest),
+            companies: generateCompanies(background, clearance, interest),
+            nextSteps: generateNextSteps(background, clearance, interest)
+        };
+    }
+    
     // Check if we have a predefined recommendation first
     const key = `${background}-${clearance}-${interest}`;
     const baseRecommendation = careerRecommendations[key];
