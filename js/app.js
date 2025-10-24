@@ -2,30 +2,56 @@ console.log('🚀 Contracting World App.js loaded successfully!');
 
 // === ENHANCED SPLASH SCREEN LOGIC ===
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 DOM loaded, initializing splash screen...');
+    
     const splashScreen = document.getElementById('splash-screen');
     const mainContent = document.getElementById('main-content');
     
+    console.log('Splash screen element:', splashScreen);
+    console.log('Main content element:', mainContent);
+    
+    // Ensure main content is hidden initially
+    if (mainContent) {
+        mainContent.style.opacity = '0';
+        mainContent.style.display = 'none';
+        mainContent.style.visibility = 'hidden';
+    }
+    
     // Enhanced splash screen sequence
     setTimeout(() => {
+        console.log('🎬 Starting splash screen transition...');
+        
         if (splashScreen) {
             splashScreen.classList.add('hidden');
+            console.log('✅ Splash screen hidden');
         }
-        if (mainContent) {
-            mainContent.style.opacity = '1';
-            mainContent.classList.add('visible');
-        }
+        
+        // Show main content after splash starts hiding
+        setTimeout(() => {
+            if (mainContent) {
+                mainContent.style.display = 'block';
+                mainContent.style.visibility = 'visible';
+                mainContent.style.opacity = '1';
+                mainContent.classList.add('visible');
+                console.log('✅ Main content shown');
+            }
+        }, 500);
         
         // Remove splash screen from DOM after transition
         setTimeout(() => {
             if (splashScreen && splashScreen.parentNode) {
                 splashScreen.parentNode.removeChild(splashScreen);
+                console.log('✅ Splash screen removed from DOM');
             }
         }, 2000);
         
-    }, 5000); // Show splash for 5 seconds to see all animations
+    }, 4000); // Show splash for 4 seconds
     
-    // Initialize main content
-    initializeMainContent();
+    // Initialize main content after splash
+    setTimeout(() => {
+        console.log('🔧 Initializing main content...');
+        initializeMainContent();
+    }, 5000);
 });
 
 function initializeMainContent() {

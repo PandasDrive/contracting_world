@@ -17,9 +17,15 @@
 }
 
 #splash-screen.hidden {
-    opacity: 0;
-    pointer-events: none;
-    z-index: -1;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: -9999 !important;
+    visibility: hidden !important;
+    transform: scale(0) !important;
+    display: none !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
 }
 
 /* Splash Background Effects */
@@ -296,11 +302,15 @@
 /* Main Content */
 #main-content {
     opacity: 0;
+    display: none;
     transition: opacity 1.5s ease-in;
+    position: relative;
+    z-index: 1;
 }
 
 #main-content.visible {
     opacity: 1;
+    display: block;
 }
 
 /* === 1. GLOBAL & PAGE STYLING === */
